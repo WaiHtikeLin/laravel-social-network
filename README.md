@@ -10,5 +10,3 @@ Connect is a social network application written in Laravel(v7.11.0).
 - browse users, followers and friends
 - highly secure authentication, authorizations and validations
 - real time messaging
-
->Note: Backend is complete and frontend needs some works
