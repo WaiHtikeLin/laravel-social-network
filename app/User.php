@@ -4,8 +4,6 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Events\FriendRequested;
-use App\Notifications\youAreFollowed;
 use Laravel\Cashier\Billable;
 use Laravel\Passport\HasApiTokens;
 use Auth;
@@ -42,7 +40,7 @@ class User extends Authenticatable
 
     public function canJoinRoom($roomId)
     {
-      return ChatMessage::where([
+      return \DB::table('chatrooms')->where([
         [
           'room_id',$roomId
         ],
@@ -51,9 +49,42 @@ class User extends Authenticatable
         ]
       ])->exists();
     }
+
+    public function settings()
+    {
+      return $this->hasOne('App\Setting');
+    }
+
+    public function pics()
+    {
+      return $this->hasMany('App\UserPic');
+    }
+
+    public function getProfilePic()
+    {
+      return $this->pics()->where([['type','profile'],['status',1]])->value('name');
+
+    }
+
     public function information()
     {
       return $this->hasOne('App\UserInformation');
+    }
+
+    public function chatRooms()
+    {
+      return $this->belongsToMany('App\Room','room_members','user_id','room_id')->withTimestamps();
+    }
+
+    public function canViewInfo($privacy,$id)
+    {
+      if($privacy=='onlyme')
+        return false;
+      if($privacy=='public')
+        return true;
+      if($this->isAlreadyFriends($id))
+        return true;
+      return false;
     }
 
     public function posts()
@@ -61,9 +92,24 @@ class User extends Authenticatable
       return $this->hasMany('App\Post');
     }
 
+    public function sharedPosts()
+    {
+      return $this->belongsToMany('App\Post','shares');
+    }
+
+    public function favorites()
+    {
+      return $this->belongsToMany('App\Post','favorites')->withTimestamps();
+    }
+
     public function likedPosts()
     {
       return $this->morphedByMany('App\Post', 'likeable')->withTimestamps();
+    }
+
+    public function reactedPosts()
+    {
+      return $this->morphedByMany('App\Post', 'reactable')->withTimestamps();
     }
 
     public function likedComments()
@@ -90,11 +136,13 @@ class User extends Authenticatable
     {
       return $this->belongsToMany('App\Post','feeds');
     }
-
-    public function getFeeds()
-    {
-      return $this->feeds()->with('owner')->withCount('likes','comments','shares')->take(10)->get();
-    }
+    //
+    // public function getFeeds()
+    // {
+    //   return $this->feeds()->with(['owner.pics'=> function($query){
+    //     $query->where('type','profile');
+    //   }])->withCount('likes','comments','shares')->take(10)->get();
+    // }
 
     public static function getPopularUsers()
     {
@@ -106,36 +154,46 @@ class User extends Authenticatable
 
     public function getAvailableUsers()
     {
-      $blockers=$this->blocked()->select('id')->get()->modelKeys();
-      $blocked=$this->blocks()->select('id')->get()->modelKeys();
+      $blockers=$this->blocked()->pluck('id');
+      $blocked=$this->blocks()->pluck('id');
       $id=$this->id;
 
-      $ids=array_merge($blockers,$blocked,[$id]);
+      $ids=$blockers->concat($blocked)->concat([$id]);
       //$ids=$ids->toArray();
-      $users=self::whereNotIn('id',$ids)->get();
+      $users=self::whereNotIn('id',$ids)->with(['pics'=> function($query){
+        $query->where([
+          ['type','profile'],
+          ['status',1]
+        ]);
+      }])->get();
       return $users;
 
     }
+
+
     public function handleFriendship()
     {
       $requester=Auth::user();
-      if($this->friendRequests()->where('id',$requester->id)->exists())
+      if(!$this->friendRequests()->where('id',$requester->id)->exists() &&
+      !$this->sentRequests()->where('id',$requester->id)->exists())
       {
-        $this->friendRequests()->detach($requester->id);
-
-        return "Add Friend";
-
+        $this->friendRequests()->attach($requester->id,['status'=>0]);
+        event(new \App\Events\FriendRequested($requester,$this->id));
+        return true;
       }
-      $this->friendRequests()->attach($requester->id);
-      event(new FriendRequested($requester,$this->id));
-      return "Requested";
-
+      return false;
     }
 
     public function handleBlocking($id)
     {
       if(!$this->blocks()->where('id',$id)->exists())
+      {
+        $this->unfriend($id);
+        $this->following()->detach($id);
+        $this->followers()->detach($id);
         $this->blocks()->attach($id);
+      }
+
     }
 
 
@@ -150,14 +208,32 @@ class User extends Authenticatable
       return $this->belongsToMany(self::class,'friendship','request_id','source_id')->withTimestamps();
     }
 
+    public function allFriends()
+    {
+      return $this->friends()->select('name','id')->with(['pics'=> function($query){
+        $query->where([['type','profile'],['status',1]])->limit(1);}])->get()
+            ->concat($this->acceptedFriends()->select('name','id')->with(['pics'=> function($query){
+              $query->where([['type','profile'],['status',1]])->limit(1);}])->get())
+              ->sortByDesc(function($product){
+        return $product->pivot->created_at;
+      });
+
+    }
+
     public function friendRequests()
     {
-      return $this->belongsToMany(self::class,'friendRequests','source_id','request_id')->withTimestamps();
+      return $this->belongsToMany(self::class,'friendRequests','source_id','request_id')->withPivot('status')->withTimestamps();
+    }
+
+    public function uncheckedFriendRequests()
+    {
+      return $this->belongsToMany(self::class,'friendRequests','source_id','request_id')->withTimestamps()
+      ->wherePivot('status',0);
     }
 
     public function sentRequests()
     {
-      return $this->belongsToMany(self::class,'friendRequests','request_id','source_id')->withTimestamps();
+      return $this->belongsToMany(self::class,'friendRequests','request_id','source_id')->withPivot('status')->withTimestamps();
     }
 
     public function followers()
@@ -180,46 +256,45 @@ class User extends Authenticatable
       return $this->belongsToMany(self::class,'blocks','blocked_id','source_id')->withTimestamps();
     }
 
-    public function getFriendshipStatus()
-    { $id=Auth::id();
+    public function getFriendshipStatus($id)
+    {
       if($this->isAlreadyFriends($id))
         return "Friend";
       if($this->friendRequests()->where('id',$id)->exists())
         return "Requested";
       if($this->sentRequests()->where('id',$id)->exists())
-        return "Accept Request";
-      return "Add Friend";
+        return "Accept";
+      return "Add friend";
 
 
 
     }
 
-    private function isAlreadyFriends($id)
+    public function isAlreadyFriends($id)
     {
       return $this->friends()->where('id',$id)->exists() || $this->acceptedFriends()->where('id',$id)->exists();
     }
 
     public function acceptFriendRequest($id)
     {
-      if($this->isAlreadyFriends($id))
-        return true;
-      $this->friends()->attach($id);
-      $user=self::findOrFail($id);
-      return true;
-      $user->notify(new Notifications\RequestAccepted($this));
+      if(!$this->isAlreadyFriends($id))
+      {
+        $this->friendRequests()->detach($id);
+        $this->friends()->attach($id);
+
+      }
+
     }
 
     public function unfriend($id)
     {
       $this->friends()->detach($id);
       $this->acceptedFriends()->detach($id);
-      return true;
     }
 
     public function rejectFriendRequest($id)
     {
       $this->friendRequests()->detach($id);
-      return true;
     }
 
     public function getFollowStatus()
@@ -233,17 +308,54 @@ class User extends Authenticatable
     {
 
       $follower=Auth::user();
-      if($this->followers()->where('id',$follower->id)->exists())
+      if(!$this->followers()->where('id',$follower->id)->exists())
       {
-        $this->followers()->detach($follower->id);
-
-        return "Follow";
+        $this->followers()->attach($follower->id);
+        $this->notify(new \App\Notifications\YouAreFollowed($follower,$this->id));
 
       }
-      $this->followers()->attach($follower->id);
-      $this->notify(new youAreFollowed($follower));
-      return "Following";
 
     }
+
+    public function likePost($post_id)
+    {
+      $this->likedPosts()->attach($post_id);
+    }
+
+    public function unlikePost($post_id)
+    {
+      $this->likedPosts()->detach($post_id);
+    }
+
+    public function favoritePost($post_id)
+    {
+      $this->favorites()->attach($post_id);
+    }
+
+    public function unfavoritePost($post_id)
+    {
+      $this->favorites()->detach($post_id);
+    }
+
+    public function likeComment($comment_id)
+    {
+      $this->likedComments()->attach($comment_id);
+    }
+
+    public function unlikeComment($comment_id)
+    {
+      $this->likedComments()->detach($comment_id);
+    }
+
+    public function likeReply($reply_id)
+    {
+      $this->likedReplies()->attach($reply_id);
+    }
+
+    public function unlikeReply($reply_id)
+    {
+      $this->likedReplies()->detach($reply_id);
+    }
+
 
 }

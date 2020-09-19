@@ -18,7 +18,7 @@ class PostPolicy
      */
     public function viewAny(User $user)
     {
-      
+      return true;
     }
 
     /**
@@ -30,7 +30,18 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        //
+      if($user->id==$post->user_id)
+        return true;
+
+      if($post->privacy=='onlyme')
+        return false;
+
+      if($post->privacy=='public')
+        return true;
+
+      if($user->isAlreadyFriends($post->user_id))
+        return true;
+      return false;
     }
 
     /**
@@ -41,7 +52,7 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        //
+      return true;
     }
 
     /**
@@ -66,6 +77,7 @@ class PostPolicy
     public function delete(User $user, Post $post)
     {
       return $user->id==$post->user_id;
+      //return true;
     }
 
     /**

@@ -15,8 +15,10 @@ class CreateBlocksTable extends Migration
     {
         Schema::create('blocks', function (Blueprint $table) {
           $table->primary(['source_id', 'blocked_id']);
-          $table->foreignid('source_id')->constrained('users');
-          $table->foreignid('blocked_id')->constrained('users');
+          $table->foreignid('source_id')->constrained('users')
+          ->onDelete('cascade')->onUpdate('cascade');
+          $table->foreignid('blocked_id')->constrained('users')
+          ->onDelete('cascade')->onUpdate('cascade');
           $table->timestamps();
         });
     }

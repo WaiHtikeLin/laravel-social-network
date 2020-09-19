@@ -15,8 +15,10 @@ class CreateFeedsTable extends Migration
     {
         Schema::create('feeds', function (Blueprint $table) {
             $table->primary(['post_id', 'user_id']);
-            $table->foreignid('post_id')->constrained();
-            $table->foreignid('user_id')->constrained();
+            $table->foreignid('post_id')->constrained()
+            ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignid('user_id')->constrained()
+            ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

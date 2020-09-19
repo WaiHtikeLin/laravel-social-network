@@ -15,8 +15,10 @@ class CreatefriendshipTable extends Migration
     {
         Schema::create('friendship', function (Blueprint $table) {
             $table->primary(['source_id', 'request_id']);
-            $table->foreignid('source_id')->constrained('users');
-            $table->foreignid('request_id')->constrained('users');
+            $table->foreignid('source_id')->constrained('users')
+            ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignid('request_id')->constrained('users')
+            ->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

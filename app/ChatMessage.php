@@ -13,4 +13,9 @@ class ChatMessage extends Model
   protected $keyType = 'string';
 
   public $incrementing = false;
+
+  public function owner()
+  {
+    return $this->belongsTo('App\User','user_id');
+  }
 }

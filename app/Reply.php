@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
-  public function likers()
+  protected $table ='replies';
+  protected $fillable = [
+    'texts','comment_id','user_id'
+  ];
+
+  public function likes()
   {
     return $this->morphToMany('App\User','likeable');
   }

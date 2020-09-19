@@ -102,8 +102,13 @@ class UserPolicy
       return $user->id==$model->id;
     }
 
-    public function chat(User $user,User $model)
+    public function chat(User $user,User $recipient)
     {
+      if(
+        ($user->blocks()->where('id',$recipient->id)->exists()) ||
+        ($user->blocked()->where('id',$recipient->id)->exists())
+        )
+        return false;
       return true;
     }
 }

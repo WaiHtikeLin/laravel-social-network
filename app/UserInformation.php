@@ -14,7 +14,9 @@ class UserInformation extends Model
         'address' => 'array',
         'emails' => 'array',
         'ph_numbers' => 'array',
-        'websites' => 'array'
+        'websites' => 'array',
+        'about' => 'array',
+        'bio' => 'array'
     ];
 
   public function user()

@@ -9,131 +9,126 @@ use Auth;
 class UserInfoController extends Controller
 {
 
+    public function __construct()
+    {
+      $this->middleware("auth");
+    }
 
-    public function addEmail(Request $request)
+    public function updateEmail(Request $request)
     {
       $data=$this->validateIt($request,'email');
-      return $this->addInfo($data,'emails');
+      return $this->massUpdateInfo($data,'email','emails');
     }
 
     private function validateIt($request,$field)
     {
       switch ($field) {
-        case 'email': $data=$request->validate(
+        case 'email': return $request->validate(
                                 [
-                                  'field' => 'required|email'
+                                  'name' => 'required|email',
+                                  'privacy' => 'required'
                                 ]
                               );
-                      return $data['field'];
+
           // code...
 
 
-        case 'phone' : $data=$request->validate(
+        case 'phone' : return $request->validate(
                               [
-                                'field' => 'required|numeric'
+                                'name' => 'required|numeric',
+                                'privacy' => 'required'
                               ]
                             );
 
-                        return $data['field'];
 
-        case 'site' : $data=$request->validate(
+
+        case 'site' : return $request->validate(
                               [
-                                'field' => 'required|regex:/^\w+(\.\w+)+$/'
+                                'name' => 'required|regex:/^\w+(\.\w+)+$/',
+                                'privacy' => 'required'
                               ]
                             );
-                      return $data['field'];
+
+        case 'other' : return $request->validate(
+                              [
+                                'name' => 'required',
+                                'privacy' => 'required'
+                              ]
+                            );
         default:
           // code...
           break;
       }
     }
 
-    public function addPhone(Request $request)
+    public function updatePhone(Request $request)
     {
       $data=$this->validateIt($request,'phone');
-      return $this->addInfo($data,'ph_numbers');
+      return $this->massUpdateInfo($data,'phone','ph_numbers');
     }
 
-    public function addSite(Request $request)
+    public function updateSite(Request $request)
     {
       $data=$this->validateIt($request,'site');
-      return $this->addInfo($data,'websites');
+      return $this->massUpdateInfo($data,'site','websites');
     }
 
     public function updateEdu(Request $request,$id=null)
     {
-      $data=$request->validate(
-        [
-          'name' => 'required',
-          'from' => 'nullable|date',
-          'to' => 'nullable|date'
-        ]
-      );
 
-      return $this->massUpdateInfo($data,'education',$id);
+      $data=$this->validateIt($request,'other');
+      return $this->massUpdateInfo($data,'education','education',$id);
     }
 
     public function updateWork(Request $request,$id=null)
     {
-      $data=$request->validate(
-        [
-          'name' => 'required',
-          'from' => 'nullable|date',
-          'to' => 'nullable|date'
-        ]
-      );
-      return $this->massUpdateInfo($data,'work',$id);
+
+      $data=$this->validateIt($request,'other');
+      return $this->massUpdateInfo($data,'work','work',$id);
     }
 
     public function updateAddress(Request $request,$id=null)
     {
-      $data=$request->validate(
-        [
-          'country' => 'required',
-          'city' => 'required',
-          'from' => 'nullable|date',
-          'to' => 'nullable|date'
 
-        ]
-      );
-      return $this->massUpdateInfo($data,'address',$id);
+      $data=$this->validateIt($request,'other');
+      return $this->massUpdateInfo($data,'address','address',$id);
     }
 
-    public function addAbout(Request $request)
-    {
-      return $this->updateInfo($request->input('about'),'about');
+    public function updateAbout(Request $request)
+    { $data=$this->validateIt($request,'other');
+      return $this->updateInfo($data,'about');
     }
 
-    public function addBio(Request $request)
-    {
-      return $this->updateInfo($request->input('bio'),'bio');
+    public function updateBio(Request $request)
+    { $data=$this->validateIt($request,'other');
+      return $this->updateInfo($data,'bio');
     }
 
 
 
-    public function editEdu($id)
-    {
-      $user=Auth::user();
-      return view('user.addedu',['edu'=>$user->information->education[$id],'id'=>$id]);
-    }
+    // public function editEdu($id)
+    // {
+    //   $user=Auth::user();
+    //   return view('user.addedu',['edu'=>$user->information->education[$id],'id'=>$id]);
+    // }
+    //
+    // public function editWork($id)
+    // {
+    //   $user=Auth::user();
+    //
+    //   return view('user.addwork',['work'=>$user->information->work[$id],'id'=>$id]);
+    // }
+    //
+    // public function editAddress($id)
+    // {
+    //   $user=Auth::user();
+    //
+    //   return view('user.addaddress',['address'=>$user->information->address[$id],'id'=>$id]);
+    // }
 
-    public function editWork($id)
-    {
-      $user=Auth::user();
-
-      return view('user.addwork',['work'=>$user->information->work[$id],'id'=>$id]);
-    }
-
-    public function editAddress($id)
-    {
-      $user=Auth::user();
-
-      return view('user.addaddress',['address'=>$user->information->address[$id],'id'=>$id]);
-    }
 
 
-
-    public function massUpdateInfo($data,$field,$id=null)
+    public function massUpdateInfo($data,$type,$field,$id=null)
     {
       $user=Auth::user();
       $info=$user->information;
@@ -141,44 +136,31 @@ class UserInfoController extends Controller
       if($id!=null)
         $fields[$id]=$data;
       else
-        $fields[]=$data;
+        { if($fields)
+            $id=count($fields);
+          else
+            $id=0;
+          $fields[]=$data;
+        }
+
       $info->$field=$fields;
       $info->save();
 
-      return redirect('edit/profile');
+      return ['id'=>$id, 'type'=>$type, 'name'=>$data['name'],
+      'privacy'=>$data['privacy'], 'field'=>$field];
     }
 
-    public function addInfo($data,$field)
+    public function updateInfo($data,$field)
     {
       $user=Auth::user();
-      $name=$data;
       $info=$user->information;
-      $fields=$info->$field;
-      $fields[]=$name;
-      $id=count($fields)-1;
-      $info->$field=$fields;
+      $info->$field=$data;
       $info->save();
 
-      $field=substr($field,0,strlen($field)-1);
-      return ['name'=>$name,'id'=>$id,'type'=>$field];
+      return ['id'=>'', 'type'=>$field, 'name'=>$data['name'],
+      'privacy'=>$data['privacy'], 'field'=>$field];
     }
 
-    public function updateInfo($data,$field,$id=null)
-    {
-      $user=Auth::user();
-
-      $info=$user->information;
-      if ($id==null) {
-        $info->$field=$data;
-        $info->save();
-        return true;
-      }
-      $fields=$info->$field;
-      $fields[$id]=$data;
-      $info->$field=$fields;
-      $info->save();
-      return true;
-    }
 
     public function deleteInfo($field,$id=null)
     {
@@ -195,38 +177,26 @@ class UserInfoController extends Controller
       array_splice($fields,$id,1);
       $info->$field=$fields;
       $info->save();
-      $data=[];
 
-      if($field=='education' || $field=='work' || $field=='address')
-      {
-        for ($i=0; $i < count($fields) ; $i++)
-          $data[]=['id'=>$i,'type'=>'redirect','field'=>$field,'name'=>$fields[$i]['name']];
-      }
 
-      else
-      {
-        $field=substr($field,0,strlen($field)-1);
-        for ($i=0; $i < count($fields) ; $i++)
-          $data[]=['id'=>$i,'type'=>$field,'name'=>$fields[$i]];
-      }
-      return $data;
+      return true;
     }
 
-    public function editEmail(Request $request,$id)
-    {
-      $data=$this->validateIt($request,'email');
-      return $this->updateInfo($data,'emails',$id);
-    }
-
-    public function editPhone(Request $request,$id)
-    { $data=$this->validateIt($request,'phone');
-      return $this->updateInfo($data,'ph_numbers',$id);
-    }
-
-    public function editSite(Request $request,$id)
-    { $data=$this->validateIt($request,'site');
-      return $this->updateInfo($data,'websites',$id);
-    }
+    // public function editEmail(Request $request,$id)
+    // {
+    //   $data=$this->validateIt($request,'email');
+    //   return $this->updateInfo($data,'emails',$id);
+    // }
+    //
+    // public function editPhone(Request $request,$id)
+    // { $data=$this->validateIt($request,'phone');
+    //   return $this->updateInfo($data,'ph_numbers',$id);
+    // }
+    //
+    // public function editSite(Request $request,$id)
+    // { $data=$this->validateIt($request,'site');
+    //   return $this->updateInfo($data,'websites',$id);
+    // }
     /**
      * Display a listing of the resource.
      *

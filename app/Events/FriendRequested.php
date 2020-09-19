@@ -21,6 +21,7 @@ class FriendRequested implements ShouldBroadcast
      */
     public $requester;
     private $id;
+
     public function __construct($requester,$id)
     {
       $this->requester=$requester;

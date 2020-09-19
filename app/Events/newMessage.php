@@ -16,16 +16,22 @@ class newMessage implements ShouldBroadcast
 
 
     public $message;
-    private $room_id;
+    public $sender;
+    public $profile_pic;
+    public $count;
+    private $id;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message,$room_id)
+    public function __construct($message,$sender,$profile_pic,$count,$id)
     {
       $this->message=$message;
-      $this->room_id=$room_id;
+      $this->sender=$sender;
+      $this->profile_pic=$profile_pic;
+      $this->count=$count;
+      $this->id=$id;
     }
 
     /**
@@ -35,6 +41,6 @@ class newMessage implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('chat.'.$this->room_id);
+        return new PrivateChannel('App.User.'.$this->id);
     }
 }

@@ -23,8 +23,16 @@ class AuthServiceProvider extends ServiceProvider
      * @return void
      */
     public function boot()
-    {
+    { 
         $this->registerPolicies();
+
+        Gate::define('viewWebSocketsDashboard', function ($user = null) {
+        return in_array($user->email, [
+            'admin@gmail.com',
+            'waihtikelin279@gmail.com'
+          ]);
+        });
+
         Passport::routes();
         //
     }

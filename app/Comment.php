@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-  protected $guards=[];
+  protected $guarded=[];
   public function likers()
   {
     return $this->morphToMany('App\User', 'likeable');
@@ -20,5 +20,10 @@ class Comment extends Model
   public function owner()
   {
     return $this->belongsTo('App\User','user_id');
+  }
+
+  public function post()
+  {
+    return $this->belongsTo('App\Post');
   }
 }

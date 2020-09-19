@@ -7,20 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 //use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
-class RequestAccepted extends Notification implements ShouldQueue
+class RequestAccepted extends Notification //implements ShouldQueue
 {
     use Queueable;
 
-    private $requester;
+    private $user;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($requester)
+    public function __construct($user)
     {
-        $this->requester=$requester;
+        $this->user=$user;
     }
 
     /**
@@ -31,7 +31,7 @@ class RequestAccepted extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['broadcast'];
+        return ['broadcast','database'];
     }
 
     /**
@@ -48,16 +48,7 @@ class RequestAccepted extends Notification implements ShouldQueue
                     ->line('Thank you for using our application!');
     }
 
-    public function toBroadcast($notifiable)
-    {
-      return new BroadcastMessage([
-        'name' => $this->requester->name,
-        'msg' => 'accepted your friend request.',
-        'nameroute' => "/user/profile/{$this->requester->id}",
-        'notiroute' => "/user/profile/{$this->requester->id}",
-        'status' => 'unchecked'
-      ]);
-    }
+
     /**
      * Get the array representation of the notification.
      *
@@ -67,8 +58,12 @@ class RequestAccepted extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'name' => $this->requester->name,
-            'id' => $this->requester->id
+          'name' => $this->user->name,
+          'id' => $this->user->id,
+          'profile_pic'=>$this->user->getProfilePic(),
+          'msg' => ' accepted your friend request.',
+          'notiroute' => "/user/profile/".$this->user->id,
+          'status' => 'unchecked'
         ];
     }
 }

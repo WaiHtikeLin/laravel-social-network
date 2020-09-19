@@ -16,9 +16,12 @@ class CreateChatMessagesTable extends Migration
         Schema::create('ChatMessages', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('room_id');
-            $table->foreignId("user_id")->constrained();
-            $table->foreignId("sender_id")->constrained('users');
+            $table->foreignId("user_id")->constrained()
+            ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId("sender_id")->constrained('users')
+            ->onDelete('cascade')->onUpdate('cascade');
             $table->string('message');
+            $table->boolean('seen');
             $table->timestamps();
         });
     }
