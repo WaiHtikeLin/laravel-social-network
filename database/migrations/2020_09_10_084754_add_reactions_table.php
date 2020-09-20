@@ -13,7 +13,7 @@ class AddReactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reactions', function (Blueprint $table) {
+        Schema::create('reactables', function (Blueprint $table) {
           $table->foreignId('user_id')->constrained()
           ->onDelete('cascade')->onUpdate('cascade');
           $table->morphs('reactable');
