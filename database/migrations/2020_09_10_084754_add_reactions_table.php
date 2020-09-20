@@ -17,6 +17,7 @@ class AddReactionsTable extends Migration
           $table->foreignId('user_id')->constrained()
           ->onDelete('cascade')->onUpdate('cascade');
           $table->morphs('reactable');
+          $table->char('emoji', 10);
           $table->timestamps();
         });
     }
