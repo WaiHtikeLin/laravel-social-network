@@ -13,7 +13,7 @@ class CreateRoomMembersTable extends Migration
      */
     public function up()
     {
-        Schema::create('chatrooms', function (Blueprint $table) {
+        Schema::create('room_members', function (Blueprint $table) {
             $table->string('room_id');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
