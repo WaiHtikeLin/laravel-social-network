@@ -142,7 +142,7 @@ document.querySelector("#send_message_form input[type='submit']").disabled=false
 
   }).listen('sawMessage', data=>{
     if(data.room_id=='{{$room_id}}')
-      document.querySelector(".send_status").forEach(status=>{status.textContent='Seen';});
+      document.querySelectorAll(".send_status").forEach(status=>{status.textContent='Seen';});
   });
 
   send_message_form.onsubmit= async (e) => {

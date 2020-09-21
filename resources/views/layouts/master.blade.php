@@ -1193,10 +1193,7 @@
                                             if($('#noti_count').html()!='')
                                             {
 
-                                                getUnreadNotifications(a);
-
-
-
+                                              getUnreadNotifications(a);
                                               $('#noti_count').html('');
                                               $('#noti_count_all').html('');
                                             }
