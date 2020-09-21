@@ -1169,48 +1169,52 @@
       });
 
       document.querySelector("#notifications").addEventListener('show.bs.dropdown',()=>{
-        // $('#noti_count').html('');
-        // $('#noti_count_all').html('');
+        $('#noti_count').html('');
+        $('#noti_count_all').html('');
         getNoti();
 
       },{once:true});
 
       document.querySelector("#requests").addEventListener('show.bs.dropdown',()=>{
-        // $('#requests_count').html('');
-        // $('#requests_count_all').html('');
+        $('#requests_count').html('');
+        $('#requests_count_all').html('');
         getRequests();
 
       },{once:true});
 
       document.querySelector("#messages").addEventListener('show.bs.dropdown',()=>{
+
         getMessages();
 
       },{once: true});
 
       $("#notifications").on('shown.bs.dropdown',function(){
-
+                let a=document.querySelector("#noti_remind");
                                             if($('#noti_count').html()!='')
-                                            { let a=document.querySelector("#noti_remind");
+                                            {
 
-                                              if(a)
-                                              {
                                                 getUnreadNotifications(a);
-                                              }
+
 
 
                                               $('#noti_count').html('');
                                               $('#noti_count_all').html('');
                                             }
+                                            else if(a)
+                                              a.parentNode.remove();
+
+
                                           });
 
 $("#requests").on('shown.bs.dropdown',function(){
+  let a=document.querySelector("#requests_remind");
   if($('#requests_count').html()!=''){
-
-    let a=document.querySelector("#requests_remind");
     getUnreadRequests(a);
     $('#requests_count').html('');
     $('#requests_count_all').html('');
   }
+  else if(a)
+    a.parentNode.remove();
 });
 
 

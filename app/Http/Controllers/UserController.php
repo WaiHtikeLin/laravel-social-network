@@ -167,7 +167,7 @@ class UserController extends Controller
     {
 
       $auth_user=Auth::user();
-      $auth_user->acceptFriendRequest($user->id);
+      $auth_user->acceptFriendRequest($user);
       $user->notify(new \App\Notifications\RequestAccepted($auth_user));
 
     }
@@ -177,10 +177,10 @@ class UserController extends Controller
       Auth::user()->rejectFriendRequest($user->id);
     }
 
-    public function unfriend($id)
+    public function unfriend($friend)
     {
       $user=Auth::user();
-      $user->unfriend($id);
+      $user->unfriend($friend);
 
     }
 

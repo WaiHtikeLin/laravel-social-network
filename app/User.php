@@ -275,21 +275,35 @@ class User extends Authenticatable
       return $this->friends()->where('id',$id)->exists() || $this->acceptedFriends()->where('id',$id)->exists();
     }
 
-    public function acceptFriendRequest($id)
+    public function acceptFriendRequest($user)
     {
-      if(!$this->isAlreadyFriends($id))
+      if(!$this->isAlreadyFriends($user->id))
       {
-        $this->friendRequests()->detach($id);
-        $this->friends()->attach($id);
+        $this->friendRequests()->detach($user->id);
 
+        $this->friends()->attach($user->id);
+
+        $posts=$this->posts()->where('privacy','friend')->pluck('id');
+        $user->feeds()->attach($posts);
+
+        $posts=$user->posts()->where('privacy','friend')->pluck('id');
+        $this->feeds()->attach($posts);
       }
-
     }
 
-    public function unfriend($id)
+
+
+    public function unfriend($friend)
     {
-      $this->friends()->detach($id);
-      $this->acceptedFriends()->detach($id);
+
+      $this->friends()->detach($friend->id);
+      $this->acceptedFriends()->detach($friend->id);
+
+      $posts=$this->posts()->where('privacy','friend')->pluck('id');
+      $friend->feeds()->detach($posts);
+
+      $posts=$friend->posts()->where('privacy','friend')->pluck('id');
+      $this->feeds()->detach($posts);
     }
 
     public function rejectFriendRequest($id)

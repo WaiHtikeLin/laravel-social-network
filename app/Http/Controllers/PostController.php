@@ -75,9 +75,9 @@ class PostController extends Controller
           $query->where([['type','profile'],['status',1]]);
         },'reactions'=> function($query) use ($id){
           $query->where('id',$id);
-        }])->attributes($id)->whereIn('id',$post_ids)->orWhere(function($query) use ($ids){
+        }])->attributes($id)->whereIn('user_id',$ids)->Where(function($query) use ($post_ids){
           $query->where('privacy','public')
-                ->whereIn('user_id',$ids);
+                ->orWhereIn('id',$post_ids);
         })
         ->latest()->offset($page*10)->limit(10)->get();
     }
@@ -218,10 +218,10 @@ class PostController extends Controller
           'copy_id'=> $copy_id
         ]);
 
-      $this->broadcast($post);
+      $this->broadcast($post,$user);
     }
 
-    private function broadcast($post)
+    private function broadcast($post,$user)
     { $privacy=$post->privacy;
       if($privacy=='friend')
       {
@@ -319,6 +319,8 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $user=Auth::user();
+
         if($post->copy_id)
           $copyable=1;
         else
@@ -333,7 +335,7 @@ class PostController extends Controller
             'shareable' => $request->boolean('shareable'),
             'copyable' => $copyable
           ]);
-          $this->broadcast($post);
+          $this->broadcast($post,$user);
         }
 
         else
@@ -344,7 +346,7 @@ class PostController extends Controller
           'copyable' => $copyable
         ]);
 
-        $id=Auth::id();
+        $id=$user->id;
 
         $post=$post->load(['owner.pics'=> function($query){
           $query->where([['type','profile'],['status',1]]);

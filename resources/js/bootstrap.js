@@ -34,7 +34,7 @@ window.Echo = new Echo({
     key: process.env.MIX_PUSHER_APP_KEY,
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     forceTLS: false,
-    wsHost:'34.205.68.26',
+    wsHost:window.location.hostname,
     wsPort: 6001,
     disableStats: true,
 });

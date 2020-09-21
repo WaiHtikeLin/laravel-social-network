@@ -118,7 +118,7 @@ Route::post('/follow/to/{user}', 'UserController@handleFollowing');
 Route::get('/block/to/{id}', 'UserController@handleBlocking');
 Route::post('/accept/to/{user}', 'UserController@acceptFriendRequest');
 Route::delete('/reject/to/{user}', 'UserController@rejectFriendRequest');
-Route::delete('/unfriend/to/{id}', 'UserController@unfriend');
+Route::delete('/unfriend/to/{friend}', 'UserController@unfriend');
 Route::delete('/cancel/request/to/{id}', 'UserController@cancelMyRequest');
 Route::delete('/cancel/follow/to/{id}', 'UserController@cancelMyFollow');
 

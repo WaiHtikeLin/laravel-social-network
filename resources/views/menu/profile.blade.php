@@ -17,7 +17,7 @@ side-nav-active
 
     <img src="{{asset("storage/profile_pics/$profile_pic")}}"
     class="rounded-circle mb-2 align-self-center" alt=""
-    style="height:5em;width:5em">
+    style="height:5em;width:5em" id="my-profile-pic">
 
     @isset($mine)
     <p class="mb-2 align-self-center">
@@ -29,7 +29,8 @@ side-nav-active
       <form action="{{'/change/profile_pic'}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('patch')
-        <input type="file" name="profile_pic" id="profile_pic"required>
+        <input type="file" name="profile_pic" id="profile_pic"
+        onchange="document.getElementById('my-profile-pic').src = window.URL.createObjectURL(this.files[0])" required>
         <input type="submit" value="Change">
       </form>
     </div>
