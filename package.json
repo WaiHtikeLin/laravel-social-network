@@ -14,7 +14,7 @@
     "cross-env": "^7.0",
     "fibers": "^5.0.0",
     "jquery": "^3.2",
-    "laravel-mix": "^5.0.1",
+    "laravel-mix": "^5.0.5",
     "lodash": "^4.17.19",
     "node-sass": "^4.14.1",
     "popper.js": "^1.12",
@@ -25,6 +25,7 @@
     "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
+    "bootstrap": "^5.0.0-alpha1",
     "laravel-echo": "^1.8.0",
     "pusher-js": "^6.0.3"
   },
