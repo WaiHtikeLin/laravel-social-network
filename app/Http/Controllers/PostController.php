@@ -104,7 +104,7 @@ class PostController extends Controller
         if($post->shares()->where('user_id',$id)->exists()){
 
           $myshare=$post->shares()->select('user_id')->with(['owner.pics'=>function($query){
-            $query->where([['type','profile'],['status',1]])->limit(1);
+            $query->where([['type','profile'],['status',1]]);
           }])->where('user_id',$id)->first();
 
 
@@ -129,7 +129,7 @@ class PostController extends Controller
       $likers=$post->likes()->select('id','name')
       ->whereNotIn('id',$ids)
       ->with(['pics'=>function($query){
-        $query->where([['type','profile'],['status',1]])->limit(1);
+        $query->where([['type','profile'],['status',1]]);
       }])->get();
 
       if($user->likedPosts()->where('id',$post->id)->exists())
@@ -137,7 +137,7 @@ class PostController extends Controller
         $user=$post->likes()->select('id','name')
         ->where('id',$id)
         ->with(['pics'=>function($query){
-          $query->where([['type','profile'],['status',1]])->limit(1);
+          $query->where([['type','profile'],['status',1]]);
         }])->first();
         $user->name.=' (You)';
 
@@ -155,7 +155,7 @@ class PostController extends Controller
 
       $reactions=$post->reactions()->whereNotIn('id',$ids)
       ->with(['pics'=>function($query){
-        $query->where([['type','profile'],['status',1]])->limit(1);
+        $query->where([['type','profile'],['status',1]]);
       }])->offset($page*10)->limit(10)->get();
 
       if($page==0)
@@ -164,7 +164,7 @@ class PostController extends Controller
         {
           $user=$post->reactions()->where('id',$id)
           ->with(['pics'=>function($query){
-            $query->where([['type','profile'],['status',1]])->limit(1);
+            $query->where([['type','profile'],['status',1]]);
           }])->first();
           $user->name.=' (You)';
 

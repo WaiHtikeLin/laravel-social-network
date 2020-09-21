@@ -211,9 +211,9 @@ class User extends Authenticatable
     public function allFriends()
     {
       return $this->friends()->select('name','id')->with(['pics'=> function($query){
-        $query->where([['type','profile'],['status',1]])->limit(1);}])->get()
+        $query->where([['type','profile'],['status',1]]);}])->get()
             ->concat($this->acceptedFriends()->select('name','id')->with(['pics'=> function($query){
-              $query->where([['type','profile'],['status',1]])->limit(1);}])->get())
+              $query->where([['type','profile'],['status',1]]);}])->get())
               ->sortByDesc(function($product){
         return $product->pivot->created_at;
       });
