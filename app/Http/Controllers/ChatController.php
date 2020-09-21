@@ -126,7 +126,7 @@ class ChatController extends Controller
 
     ChatMessage::where([
       ['room_id',$room_id],
-      ['sender_id'.'<>',$my_id],
+      ['sender_id','<>',$my_id],
       ['seen',0]
       ])->update(['seen'=>1]);
 
