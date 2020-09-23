@@ -5,11 +5,8 @@
 
   @if($title=='site')
   <div class="col-7">
-    <div class="input-group">
-      <span class="input-group-text">http://</span>
-      <input class="col-7 form-control rounded-right mr-2"
-      type="text" name="name" placeholder="Add {{$title}}">
-    </div>
+      <input class="col-7 form-control rounded-pill mr-2"
+      type="url" name="name" placeholder="Start with http:// or https://">
   </div>
 
 
@@ -42,11 +39,9 @@
 <div class="row mb-2">
   @if($title=='site')
   <div class="col-7">
-    <div class="input-group">
-      <span class="input-group-text">http://</span>
-      <input class="col-7 form-control rounded-right mr-2"
-      type="text" name="name" placeholder="Add {{$title}}">
-    </div>
+
+      <input class="col-7 form-control rounded-pill mr-2"
+      type="url" name="name" placeholder="Start with http:// or https://">
   </div>
 
 

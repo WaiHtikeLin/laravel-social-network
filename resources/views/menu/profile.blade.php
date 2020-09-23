@@ -123,7 +123,7 @@ side-nav-active
 
   @if($site && (($me->canViewInfo($site['privacy'],$info->user_id) || isset($mine))))
   <p><img src="{{asset("img/global.png")}}" alt="" class="info-icon mr-2">
-    <a href="http://{{$site['name']}}">{{$site['name']}}</a></p>
+    <a href="{{$site['name']}}">{{$site['name']}}</a></p>
   @endif
 
   @if($phone && (($me->canViewInfo($phone['privacy'],$info->user_id) || isset($mine))))
@@ -369,7 +369,7 @@ side-nav-active
     @foreach($info->websites as $id=>$w)
     <div>
       <li id="site_{{$id}}">
-        <a href="http://{{$w['name']}}">{{$w['name']}}</a>
+        <a href="{{$w['name']}}">{{$w['name']}}</a>
         <img src="{{asset('img')}}/{{$w['privacy']}}.png" alt="" class="ml-2 info-privacy">
         <a href="#edit_site_{{$id}}" class="mx-2" data-toggle="collapse" aria-expanded="false">Edit</a>
         <a href="#" class="ml-2" onclick="deleteInfo(this)" data-name="websites" data-id={{$id}}>Delete</a>
@@ -822,7 +822,7 @@ side-nav-active
     function isInfoALink(type, name)
     {
       if(type=='site')
-        return `<a href='http://${name}'>${name}</a>`;
+        return `<a href='${name}'>${name}</a>`;
       return name;
     }
 

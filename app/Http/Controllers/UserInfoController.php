@@ -44,7 +44,7 @@ class UserInfoController extends Controller
 
         case 'site' : return $request->validate(
                               [
-                                'name' => 'required|regex:/^\w+(\.\w+)+$/',
+                                'name' => 'required|url',
                                 'privacy' => 'required'
                               ]
                             );
