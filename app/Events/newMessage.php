@@ -20,6 +20,8 @@ class newMessage implements ShouldBroadcast
     public $profile_pic;
     public $count;
     private $id;
+
+    public $queue = 'message';
     /**
      * Create a new event instance.
      *

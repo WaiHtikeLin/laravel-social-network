@@ -17,6 +17,8 @@ class sawMessage implements ShouldBroadcast
     public $room_id;
     private $sender_id;
 
+    public $queue = 'message';
+
 
     /**
      * Create a new event instance.

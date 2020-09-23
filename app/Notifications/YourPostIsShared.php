@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class YourPostIsShared extends Notification //implements ShouldQueue
+class YourPostIsShared extends Notification implements ShouldQueue
 {
     use Queueable;
     private $user;

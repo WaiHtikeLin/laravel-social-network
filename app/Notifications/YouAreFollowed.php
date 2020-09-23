@@ -8,7 +8,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 
-class YouAreFollowed extends Notification //implements ShouldQueue
+class YouAreFollowed extends Notification implements ShouldQueue
 {
     use Queueable;
     private $follower;

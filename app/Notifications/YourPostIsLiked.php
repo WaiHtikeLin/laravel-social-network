@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class YourPostIsLiked extends Notification //implements ShouldQueue
+class YourPostIsLiked extends Notification implements ShouldQueue
 {
     use Queueable;
     private $user;

@@ -16,6 +16,8 @@ class editedMessage implements ShouldBroadcast
 
     public $id,$message,$room_id;
     private $user_id;
+
+    public $queue = 'message';
     /**
      * Create a new event instance.
      *
