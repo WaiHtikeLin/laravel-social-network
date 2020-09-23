@@ -67,4 +67,9 @@ class SearchController extends Controller
         $query->where('id',$id);
       }])->attributes($id)->latest()->get();
   }
+
+  public function searchMobile()
+  {
+    return view('menu.mobilesearch');
+  }
 }

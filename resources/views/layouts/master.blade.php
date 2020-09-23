@@ -234,20 +234,15 @@
       </div>
     </nav>
 
-    <div class="d-flex justify-content-between d-md-none clean-white">
-      <h5 class="main-color font-weight-bold my-auto"><em>Connect</em></h5>
-      <form class="d-flex mt-1" action="{{url('/search')}}" method="post">
+    <div class="d-flex d-md-none clean-white">
+      <h5 class="main-color font-weight-bold mr-auto my-auto"><em>Connect</em></h5>
 
-          @csrf
-          <input class="form-control" type="search" placeholder="Search users or posts"
-          aria-label="Search" required name="search">
-          <button type="submit" name="button" class="border-0 btn btn-success">
-            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search text-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
-              <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-            </svg>
-          </button>
-      </form>
+      <a type="submit" name="button" class="border-0 btn btn-success mr-2 mt-1" href="{{url('/search/mobile')}}">
+        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search text-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+          <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+        </svg>
+      </a>
 
       <button type="button" name="button" class="border-0 btn btn-success mt-1" data-toggle="tooltip" data-placement="left" title="Create new post" onclick="showCreatePostModal()">
         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle text-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

@@ -35,7 +35,7 @@ class UserInfoController extends Controller
 
         case 'phone' : return $request->validate(
                               [
-                                'name' => 'required|numeric',
+                                'name' => 'required',
                                 'privacy' => 'required'
                               ]
                             );

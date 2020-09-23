@@ -29,6 +29,9 @@ Route::get('/about', 'RuleController@about');
 Route::get('/help', 'RuleController@help');
 Route::post('/add/question', 'RuleController@addQuestion');
 
+Route::get('/search/mobile', 'SearchController@searchMobile');
+
+
 
 
 
