@@ -177,7 +177,7 @@ class UserController extends Controller
       Auth::user()->rejectFriendRequest($user->id);
     }
 
-    public function unfriend($friend)
+    public function unfriend(User $friend)
     {
       $user=Auth::user();
       $user->unfriend($friend);

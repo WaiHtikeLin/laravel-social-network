@@ -233,12 +233,12 @@
       </div>
     </nav>
 
-    <div class="d-flex d-md-none clean-white">
-      <h5 class="main-color font-weight-bold mr-auto my-auto"><em>Connect</em></h5>
-      <form class="d-flex mr-2 mt-1" action="{{url('/search')}}" method="post">
+    <div class="d-flex justify-content-between d-md-none clean-white">
+      <h5 class="main-color font-weight-bold my-auto"><em>Connect</em></h5>
+      <form class="d-flex mt-1" action="{{url('/search')}}" method="post">
 
           @csrf
-          <input class="form-control mr-2" type="search" placeholder="Search users or posts"
+          <input class="form-control" type="search" placeholder="Search users or posts"
           aria-label="Search" required name="search">
           <button type="submit" name="button" class="border-0 btn btn-success">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search text-light" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
