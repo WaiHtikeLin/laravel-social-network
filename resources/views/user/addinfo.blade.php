@@ -2,10 +2,25 @@
 <form method="post" onsubmit="updateInfo(this,'{{$title}}')" data-id="{{$id}}">
   @csrf
 <div class="row mb-2">
+
+  @if($title=='site')
+  <div class="col-7">
+    <div class="input-group">
+      <span class="input-group-text">http://</span>
+      <input class="col-7 form-control rounded-right mr-2"
+      type="text" name="name" placeholder="Add {{$title}}">
+    </div>
+  </div>
+
+
+  @else
+
   <div class="col-7">
     <input class="col-7 form-control rounded-pill mr-2"
-    type="text" name="name" placeholder="edit {{$title}}" value="{{$name}}">
+    type="text" name="name" placeholder="Edit {{$title}}" value="{{$name}}">
   </div>
+
+  @endif
 
   <div class="col-3">
     <select class="form-select" name="privacy" aria-label="Choose privacy">
@@ -25,10 +40,24 @@
 <form class="" method="post" onsubmit="addInfo(this,'{{$title}}','{{$wrap}}')">
   @csrf
 <div class="row mb-2">
+  @if($title=='site')
+  <div class="col-7">
+    <div class="input-group">
+      <span class="input-group-text">http://</span>
+      <input class="col-7 form-control rounded-right mr-2"
+      type="text" name="name" placeholder="Add {{$title}}">
+    </div>
+  </div>
+
+
+  @else
+
   <div class="col-7">
     <input class="col-7 form-control rounded-pill mr-2"
-    type="text" name="name" placeholder="add {{$title}}">
+    type="text" name="name" placeholder="Add {{$title}}">
   </div>
+
+  @endif
 
   <div class="col-3">
     <select class="form-select" name="privacy" aria-label="Choose privacy">

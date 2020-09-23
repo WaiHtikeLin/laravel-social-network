@@ -122,7 +122,8 @@ side-nav-active
   @endif
 
   @if($site && (($me->canViewInfo($site['privacy'],$info->user_id) || isset($mine))))
-  <p><img src="{{asset("img/global.png")}}" alt="" class="info-icon mr-2">{{$site['name']}}</p>
+  <p><img src="{{asset("img/global.png")}}" alt="" class="info-icon mr-2">
+    <a href="http://{{$site['name']}}">{{$site['name']}}</a></p>
   @endif
 
   @if($phone && (($me->canViewInfo($phone['privacy'],$info->user_id) || isset($mine))))
@@ -367,7 +368,8 @@ side-nav-active
 @if($info->websites)
     @foreach($info->websites as $id=>$w)
     <div>
-      <li id="site_{{$id}}">{{$w['name']}}
+      <li id="site_{{$id}}">
+        <a href="http://{{$w['name']}}">{{$w['name']}}</a>
         <img src="{{asset('img')}}/{{$w['privacy']}}.png" alt="" class="ml-2 info-privacy">
         <a href="#edit_site_{{$id}}" class="mx-2" data-toggle="collapse" aria-expanded="false">Edit</a>
         <a href="#" class="ml-2" onclick="deleteInfo(this)" data-name="websites" data-id={{$id}}>Delete</a>
@@ -441,11 +443,11 @@ side-nav-active
   <div>
     <p>{{$info->bio['name']}}
     <img src="{{asset('img')}}/{{$info->bio['privacy']}}.png" alt="" class="ml-2 info-privacy">
-    <a href="#edit_bio_{{$id}}" class="mx-2" data-toggle="collapse" aria-expanded="false">Edit</a>
+    <a href="#edit_bio" class="mx-2" data-toggle="collapse" aria-expanded="false">Edit</a>
     <a href="#" class="ml-2" onclick="deleteInfo(this)" data-name="bio" data-id="">Delete</a>
   </p>
 
-    <div class="collapse" id="edit_bio_{{$id}}">
+    <div class="collapse" id="edit_bio">
       @include('user.addinfo',['edit'=>true,'name'=>$info->bio['name'],'privacy'=>$info->bio['privacy'],'id'=>'','title'=>'bio'])
     </div>
   </div>
@@ -815,6 +817,13 @@ side-nav-active
 
 
 
+    }
+
+    function isInfoALink(type, name)
+    {
+      if(type=='site')
+        return `<a href='http://${name}'>${name}</a>`;
+      return name;
     }
 
     async function deleteInfo(link)

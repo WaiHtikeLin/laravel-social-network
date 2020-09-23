@@ -1,5 +1,5 @@
-<li id="${info.type}_${info.id}">${info.name}
-
+<li id="${info.type}_${info.id}">
+  ${isInfoALink(info.type,info.name)}
   <img src="{{asset('img')}}/${info.privacy}.png" alt="" class="ml-2 info-privacy">
   <a href="#edit_${info.type}_${info.id}" class="mx-2" data-toggle="collapse" aria-expanded="false">Edit</a>
   <a href="#" class="ml-2" onclick="deleteInfo(this)" data-name="${info.field}" data-id=${info.id}>Delete</a>
