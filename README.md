@@ -1,9 +1,11 @@
 # Connect
-Connect is a social network application written in Laravel(v7.11.0).
+Connect is a social network application written in Laravel.
+
+Visit website [here](https://connectonline.live).
 
 ## Features
 - create posts
-- like, comment, share and save posts
+- react, comment, share and favorite posts
 - friendship features
 - follow and block features
 - real time notifications and events
