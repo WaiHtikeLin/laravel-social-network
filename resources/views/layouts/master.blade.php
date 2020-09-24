@@ -286,7 +286,7 @@
 
               </div>
 
-              <textarea name="texts" class="form-control mb-3" placeholder="Type something on your mind..." required autofocus></textarea>
+              <textarea name="texts" class="form-control mb-3" placeholder="Type something on your mind..." required style="min-height:200px"></textarea>
 
               <div class="form-check form-switch mb-3">
                 <label class="form-check-label">Shareable</label>
@@ -341,7 +341,7 @@
 
               </div>
 
-              <textarea name="texts" class="form-control mb-3" placeholder="Type something on your mind..."></textarea>
+              <textarea name="texts" class="form-control mb-3" placeholder="Type something on your mind..." style="min-height:200px"></textarea>
 
               <div class="form-check form-switch mb-3">
                 <label class="form-check-label">Shareable</label>
@@ -375,7 +375,7 @@
           <div class="modal-header p-0">
             <button type="button" class="btn btn-light border-0 clean-white w-100 text-left py-2" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&lt;</span>
-              <span class="ml-2">Edit Post</span>
+              <span class="ml-2">Edit Copy Post</span>
             </button>
             <!-- <div class="" data-dismiss="modal" aria-label="Close">
 
@@ -398,7 +398,7 @@
 
               </div>
 
-              <textarea name="texts" class="form-control mb-3" placeholder="Type something on your mind..."></textarea>
+              <textarea name="texts" class="form-control mb-3" placeholder="Type something on your mind..." style="min-height:200px"></textarea>
 
               <div class="form-check form-switch mb-3">
                 <label class="form-check-label">Shareable</label>
