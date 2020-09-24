@@ -175,12 +175,9 @@ side-nav-active
     @include('user.addinfo',['title'=>'about','wrap'=>'#about-content'])
   </div>
 
+
+  <div id="about-content" class="clean-white mb-2">
 @if($info->about)
-<div class="clean-white mb-2 p-2">
-
-
-  <div id="about-content">
-
     <div>
       <p>{{$info->about['name']}}<img src="{{asset('img')}}/{{$info->about['privacy']}}.png" alt="" class="ml-2 info-privacy">
       <a href="#edit-about" class="mx-2" data-toggle="collapse" aria-expanded="false">Edit</a>
@@ -191,14 +188,10 @@ side-nav-active
       </div>
     </div>
 
-
-
-</div>
-
-
-
-</div>
 @endif
+
+</div>
+
 
 
 
@@ -434,10 +427,7 @@ side-nav-active
 
 
 
-  <div class="clean-white mb-2">
-
-
-<div id="bio-content">
+<div id="bio-content" class="clean-white mb-2">
 
   @if($info->bio)
   <div>
@@ -455,10 +445,6 @@ side-nav-active
 
   @endif
 </div>
-
-  </div>
-
-
 
 
 </div>
