@@ -119,7 +119,7 @@ ${renderCopyModal(feed.id,feed.copyable)}
 
 @isset($copied)
 <div>
-  <p>${post.texts}</p>
+  <p style="white-space:pre-wrap" class="text-break">${post.texts}</p>
   <p>
     <strong><a href="{{url('')}}/user/profile/${post.owner.id}"
     class="text-decoration-none react-link text-dark">${post.owner.name}</a></strong>
