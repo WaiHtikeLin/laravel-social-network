@@ -25,7 +25,7 @@ data-keyboard="false" id='copyModal_${id}'  onclick="event.stopPropagation()">
 
         </div>
 
-        <textarea name="texts" class="form-control mb-3" placeholder="Say something with the post..."></textarea>
+        <textarea name="texts" class="form-control mb-3" placeholder="Say something with the post..." style="min-height:200px"></textarea>
 
         <div class="form-check form-switch mb-3">
           <label class="form-check-label">Shareable</label>
