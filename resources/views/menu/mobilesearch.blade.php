@@ -92,8 +92,9 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
 
-    <div class="clean-white">
-      <form class="d-flex mt-1" action="{{url('/search')}}" method="post">
+    <div class="clean-white d-flex">
+      <a class="btn btn-link text-decoration-none" onclick="history.back();">Back</a>
+      <form class="flex-fill d-flex" action="{{url('/search')}}" method="post">
 
           @csrf
           <input class="form-control" type="search" placeholder="Search users or posts"
