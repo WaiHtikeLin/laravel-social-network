@@ -534,7 +534,7 @@ side-nav-active
 
     @foreach($info->websites as $w)
       @if($me->canViewInfo($w['privacy'],$info->user_id))
-      <li>{{$w['name']}}</li>
+      <li><a href="{{$w['name']}}">{{$w['name']}}</a></li>
       @endif
     @endforeach
   </ul>

@@ -16,7 +16,7 @@ side-nav-active
       We organize private posts(only me) posts separately to access easily.
     </li>
     <li>You can make friends on Connect, follow people and see their public posts</li>
-    <li>We have copy post feature which helps you to copy post and credit author easely.</li>
+    <li>We have copy post feature which helps you to copy post and credit author easily.</li>
     <li>We are not limited your emotions! You can react the post with the emoji of your choice!</li>
     <li>Favorite posts you like and easily access them</li>
     <li>Chat your loved ones with real time messaging. Messages are encrypted securely.</li>
