@@ -695,14 +695,14 @@
     function getMessageTemplate(msg,count)
     {
       if(count>0)
-        return `<div class="clearfix"><p>
+        return `<div class="d-flex"><p class="mr-auto mb-0">
         <strong id="latest_msg">${msg}</strong></p>
-        <p class="float-right">
+        <p class="mb-0">
         <span class="badge bg-success rounded-circle" id="msg_count">${count}</span>
         </p>
         </div>`;
       else
-        return `<p id="latest_msg">${msg}</p>`;
+        return `<p id="latest_msg" class="mb-0">${msg}</p>`;
     }
     function createMessage(msg,user,profile_pic,count,wrap)
     {
@@ -724,7 +724,7 @@
       </div>
 
       <div class="flex-fill">
-        <p><strong>${user.name}</strong></p>
+        <p class="mb-0"><strong>${user.name}</strong></p>
         ${getMessageTemplate(msg.message,count)}
         <p class="mb-0" id="created_at">${created_at}</p>
         <p class="text-right m-0">
