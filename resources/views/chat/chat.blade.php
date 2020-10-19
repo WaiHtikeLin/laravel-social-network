@@ -3,7 +3,7 @@
 @section('main')
 
 <div class="col-12 col-md-6">
-    <div>
+    <div class="position-relative">
       <div class="d-flex flex-column mb-5">
         <img src="{{asset("storage/profile_pics/$profile_pic")}}" class="rounded-circle mb-2 align-self-center" alt=""
         style="height:5em;width:5em">

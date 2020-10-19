@@ -23,10 +23,8 @@ class ChatController extends Controller
 
   public function getLatestMessages()
   { $id=Auth::id();
-    $rooms=Room::select('id')->whereHas('messages',function($query) use ($id){
-      $query->where('user_id',$id);
-    })->with(['messages'=>function($query) use ($id){
-      $query->where('user_id',$id)->latest()->limit(5);
+    $rooms=Room::select('id')->with(['messages'=>function($query) use ($id){
+      $query->where('user_id',$id)->latest();
     },'members'=>function($query) use ($id){
       $query->with(['pics'=>function($query){
         $query->where([['type','profile'],['status',1]]);
@@ -37,7 +35,11 @@ class ChatController extends Controller
         ['sender_id','<>',$id],
         ['seen',0]
       ]);
-    }])->orderBy('updated_at','desc')->limit(5)->get();
+    }])->whereHas('messages',function($query) use ($id){
+      $query->where('user_id',$id);
+    })->orderBy('updated_at','desc')->limit(5)->get();
+
+
 
     return $rooms->map(function($room){
 
@@ -52,7 +54,7 @@ class ChatController extends Controller
     $rooms=Room::select('id')->whereHas('messages',function($query) use ($id){
       $query->where('user_id',$id);
     })->with(['messages'=>function($query) use ($id){
-      $query->where('user_id',$id)->latest()->limit(10);
+      $query->where('user_id',$id)->latest();
     },'members'=>function($query) use ($id){
       $query->with(['pics'=>function($query){
         $query->where([['type','profile'],['status',1]]);
