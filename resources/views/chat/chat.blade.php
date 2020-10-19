@@ -19,7 +19,7 @@
           @csrf
           <div class="input-group">
             <input class="form-control rounded-pill mr-2"
-            type="text" name="message" value="" placeholder="Enter message..."
+            id="send-message-text" type="text" name="message" value="" placeholder="Enter message..."
             aria-label="Text box to message" disabled>
             <input class="btn btn-light rounded-pill" type="submit" name="send-message" value="Send" disabled>
           </div>
@@ -160,6 +160,7 @@ document.querySelector("#send_message_form input[type='submit']").disabled=false
       chatbox.append(createNewMessage(new_message,msg));
 
       previous_id=msg.sender_id;
+      document.querySelector("#send-message-text").value='';
     }
     else
       alert("error");
