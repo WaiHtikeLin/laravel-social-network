@@ -782,11 +782,16 @@
         $.get('{{ url('get/messages') }}',function(data)
           {
               $.each(data,function(index, data) {
+                let message={
+                  message:data.message,
+                  room_id : data.id,
+                  created_at: data.created_at
+                };
 
                 let wrap=document.createElement('li');
                 wrap.id="chat_"+data.id;
                 wrap.className="dropdown-item";
-                $("#messages_menu").append(createMessage(data.messages[0],data.members[0],data.members[0].pics[0].name,data.messages_count,wrap));
+                $("#messages_menu").append(createMessage(message,data.members[0],data.members[0].pics[0].name,data.messages_count,wrap));
 
               });
 

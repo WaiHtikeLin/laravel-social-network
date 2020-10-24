@@ -27,10 +27,15 @@ function getAllMessages(page=0)
       }
 
         $.each(data,function(index, data) {
+          let message={
+            message : data.message,
+            room_id : data.id,
+            created_at : data.created_at
 
+          }
           let wrap=document.createElement('div');
           wrap.id="chat_all_"+data.id;
-          $("#messages_menu_all").append(createMessage(data.messages[0],data.members[0],data.members[0].pics[0].name,data.messages_count,wrap));
+          $("#messages_menu_all").append(createMessage(message,data.members[0],data.members[0].pics[0].name,data.messages_count,wrap));
 
         });
 

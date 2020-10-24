@@ -23,9 +23,17 @@ class ChatController extends Controller
 
   public function getLatestMessages()
   { $id=Auth::id();
-    $rooms=Room::select('id')->with(['messages'=>function($query) use ($id){
-      $query->where('user_id',$id)->latest();
-    },'members'=>function($query) use ($id){
+
+    $latest=ChatMessage::selectRaw('room_id as rid, max(created_at) as latest')->where('user_id',$id)->groupBy('room_id');
+    $messages=ChatMessage::select('message','room_id','created_at')->where('user_id',$id)->joinSub($latest,'latest', function($join){
+      $join->on('ChatMessages.room_id','=','latest.rid')->whereColumn('ChatMessages.created_at','latest.latest');
+    });
+
+    $rooms=Room::select('id','message','messages.created_at')
+    ->whereHas('messages',function($query) use ($id){
+      $query->where('user_id',$id);
+    })
+    ->with(['members'=>function($query) use ($id){
       $query->with(['pics'=>function($query){
         $query->where([['type','profile'],['status',1]]);
       }])->where('id','<>',$id);
@@ -35,15 +43,17 @@ class ChatController extends Controller
         ['sender_id','<>',$id],
         ['seen',0]
       ]);
-    }])->whereHas('messages',function($query) use ($id){
-      $query->where('user_id',$id);
+    }])
+    ->leftJoinSub($messages,'messages', function($join){
+      $join->on('rooms.id','=','messages.room_id');
     })->orderBy('updated_at','desc')->limit(5)->get();
+
 
 
 
     return $rooms->map(function($room){
 
-      $room->messages[0]->message=Crypt::decryptString($room->messages[0]->message);
+      $room->message=Crypt::decryptString($room->message);
       return $room;
     });
 
@@ -51,11 +61,15 @@ class ChatController extends Controller
 
   public function getAllMessages($page)
   { $id=Auth::id();
-    $rooms=Room::select('id')->whereHas('messages',function($query) use ($id){
+
+    $latest=ChatMessage::selectRaw('room_id as rid, max(created_at) as latest')->where('user_id',$id)->groupBy('room_id');
+    $messages=ChatMessage::select('message','room_id','created_at')->where('user_id',$id)->joinSub($latest,'latest', function($join){
+      $join->on('ChatMessages.room_id','=','latest.rid')->whereColumn('ChatMessages.created_at','latest.latest');
+    });
+
+    $rooms=Room::select('id','message', 'messages.created_at')->whereHas('messages',function($query) use ($id){
       $query->where('user_id',$id);
-    })->with(['messages'=>function($query) use ($id){
-      $query->where('user_id',$id)->latest();
-    },'members'=>function($query) use ($id){
+    })->with(['members'=>function($query) use ($id){
       $query->with(['pics'=>function($query){
         $query->where([['type','profile'],['status',1]]);
       }])->where('id','<>',$id);
@@ -65,11 +79,13 @@ class ChatController extends Controller
         ['sender_id','<>',$id],
         ['seen',0]
       ]);
-    }])->orderBy('updated_at','desc')->offset($page*10)->limit(10)->get();
+    }])->leftJoinSub($messages,'messages', function($join){
+      $join->on('rooms.id','=','messages.room_id');
+    })->orderBy('updated_at','desc')->offset($page*10)->limit(10)->get();
 
     return $rooms->map(function($room){
 
-      $room->messages[0]->message=Crypt::decryptString($room->messages[0]->message);
+      $room->message=Crypt::decryptString($room->message);
 
       return $room;
     });
