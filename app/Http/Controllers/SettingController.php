@@ -21,13 +21,10 @@ class SettingController extends Controller
     public function index()
     {
       $settings=Auth::user()->settings;
-      $friends_privacy=['public'=>'','friend'=>'','onlyme'=>''];
-      $followers_privacy=['public'=>'','friend'=>'','onlyme'=>''];
-      $following_privacy=['public'=>'','friend'=>'','onlyme'=>''];
 
-      $friends_privacy[$settings->friends_privacy]='selected';
-      $followers_privacy[$settings->followers_privacy]='selected';
-      $following_privacy[$settings->following_privacy]='selected';
+      $friends_privacy=$settings->friends_privacy;
+      $followers_privacy=$settings->followers_privacy;
+      $following_privacy=$settings->following_privacy;
 
 
       return view('user.settings',['friends_privacy'=>$friends_privacy,
