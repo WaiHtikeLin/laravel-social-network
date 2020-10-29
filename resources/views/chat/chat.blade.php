@@ -3,11 +3,17 @@
 @section('main')
 
 <div class="col-12 col-md-6">
-    <div class="position-relative">
+    <div>
       <div class="d-flex flex-column mb-5">
-        <img src="{{asset("storage/profile_pics/$profile_pic")}}" class="rounded-circle mb-2 align-self-center" alt=""
-        style="height:5em;width:5em">
-        <p class="mb-2 align-self-center">{{$user->name}}</p>
+        <a href='{{url("/user/profile/$user->id")}}' class="mb-2 align-self-center">
+          <img src="{{asset("storage/profile_pics/$profile_pic")}}" class="rounded-circle" alt=""
+          style="height:5em;width:5em">
+        </a>
+
+        <p class="mb-2 align-self-center">
+          <a href='{{url("/user/profile/$user->id")}}' class="text-decoration-none text-dark" style="font-size:150%">{{$user->name}}</a>
+        </p>
+
       </div>
 
       <div id="chatbox">

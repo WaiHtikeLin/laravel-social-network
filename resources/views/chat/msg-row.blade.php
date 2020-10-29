@@ -1,7 +1,9 @@
 <div class="col-1 pr-0">
     @isset($image)
+    <a href='{{url("/user/profile/$user->id")}}'>
       <img src="{{ asset("storage/profile_pics/$profile_pic") }}" alt=""
       style="height:2em;width:2em" class="rounded-circle mr-0">
+    </a>
 
     @endisset
 
