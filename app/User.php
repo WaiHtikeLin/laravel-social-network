@@ -188,7 +188,7 @@ class User extends Authenticatable
     {
       if(!$this->blocks()->where('id',$id)->exists())
       {
-        $this->unfriend($id);
+        $this->unfriend($this,self::find($id));
         $this->following()->detach($id);
         $this->followers()->detach($id);
         $this->blocks()->attach($id);
