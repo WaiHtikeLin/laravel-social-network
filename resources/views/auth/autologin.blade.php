@@ -15,7 +15,7 @@ const data={
   'password' : 'guest12345'
 };
 
-fetch('{{route('login')}}',{
+fetch('/login',{
   method: 'POST',
   headers:{
     'Content-Type': 'application/json;charset=utf-8',
