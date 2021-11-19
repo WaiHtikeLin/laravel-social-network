@@ -65,7 +65,7 @@
                             </div>
                         </div>
                     </form>
-                    <p class="text-right mt-2"><a href="{{url('/guest')}}">Login As Guest</a></p>
+                    <!-- <p class="text-right mt-2"><a href="">Login As Guest</a></p> -->
 
                 </div>
             </div>
