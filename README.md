@@ -1,6 +1,6 @@
 # Connect
 Connect is a social network application written in Laravel.
-Live at [https://100.25.22.211](https://connect-online.herokuapp.com)
+Live at [https://connect-online.herokuapp.com](https://connect-online.herokuapp.com)
 
 ## Features
 - create posts
