@@ -1,0 +1,63 @@
+<script type="text/ecmascript-6">
+    import hljs from 'highlight.js/lib/highlight';
+    import sql from 'highlight.js/lib/languages/sql';
+    import StandardSqlFormatter from 'sql-formatter/src/languages/StandardSqlFormatter';
+
+    export default {
+        data(){
+            return {
+                sqlFormatter: new StandardSqlFormatter({}),
+            };
+        },
+
+        methods:{
+            highlightSQL() {
+                this.$nextTick(() => {
+                    hljs.registerLanguage('sql', sql);
+                    hljs.highlightBlock(this.$refs.sqlcode);
+                });
+            }
+        }
+    }
+</script>
+
+<template>
+    <preview-screen title="Query Details" resource="queries" :id="$route.params.id" v-on:ready="highlightSQL()">
+        <template slot="table-parameters" slot-scope="slotProps">
+            <tr>
+                <td class="table-fit font-weight-bold">Connection</td>
+                <td>
+                    {{slotProps.entry.content.connection}}
+                </td>
+            </tr>
+
+            <tr  v-if="slotProps.entry.content.file">
+                <td class="table-fit font-weight-bold">Location</td>
+                <td>
+                    {{slotProps.entry.content.file}}:{{slotProps.entry.content.line}}
+                </td>
+            </tr>
+
+            <tr>
+                <td class="table-fit font-weight-bold">Duration</td>
+                <td>
+                    <span class="badge badge-danger font-weight-light" v-if="slotProps.entry.content.slow">
+                        {{slotProps.entry.content.time}}ms
+                    </span>
+
+                    <span v-else>
+                        {{slotProps.entry.content.time}}ms
+                    </span>
+                </td>
+            </tr>
+        </template>
+
+        <div slot="after-attributes-card" slot-scope="slotProps">
+            <div class="card mt-5">
+                <div class="card-header"><h5>Query</h5></div>
+
+                <pre class="code-bg p-4 mb-0 text-white" ref="sqlcode">{{sqlFormatter.format(slotProps.entry.content.sql)}}</pre>
+            </div>
+        </div>
+    </preview-screen>
+</template>
