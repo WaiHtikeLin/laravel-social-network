@@ -34,8 +34,6 @@ class PostController extends Controller
 
     }
 
-
-
     public function getPrivates($page)
     { $user=Auth::user();
       $id=$user->id;
