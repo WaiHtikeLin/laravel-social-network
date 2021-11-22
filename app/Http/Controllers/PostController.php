@@ -24,9 +24,8 @@ class PostController extends Controller
 
       if (!$request->secure())
       {
-        return redirect()->secure($request->getRequestUri());
+        return redirect('/home', true);
       }
-
 
       $user=Auth::user();
 
