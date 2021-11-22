@@ -19,8 +19,16 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($type="feeds")
-    { $user=Auth::user();
+    public function index(Request $request, $type="feeds")
+    {
+
+      if (!$request->secure())
+      {
+        return redirect()->secure($request->getRequestUri());
+      }
+
+
+      $user=Auth::user();
 
       $class="nav-item-active";
       if($type=='privates' || $type=='favorites')
