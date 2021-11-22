@@ -21,7 +21,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = 'https://connect-online.herokuapp.com/home';
+    public const HOME = '/home';
 
 
 
