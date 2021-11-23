@@ -25,8 +25,11 @@ fetch('/login',{
 
   body: JSON.stringify(data)
 }).then(response=>{
-  if(response.status==302)
+  if(response.ok)
     location.href='{{url('/home')}}';
+  else {
+    console.log(response.status);
+  }
 });
 
 
