@@ -14,6 +14,11 @@ class PostController extends Controller
       $this->authorizeResource(Post::class, 'post');
     }
 
+    public function home()
+    {
+      return redirect('/home', 302, [], true);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,14 +26,6 @@ class PostController extends Controller
      */
     public function index(Request $request, $type="feeds")
     {
-
-      return [$request->url()];
-
-      // if (!$request->url!='https://connect-online.herokuapp.com/home'
-      // {
-      // return redirect('/home', 302, [], true);
-      // }
-
       $user=Auth::user();
 
       $class="nav-item-active";

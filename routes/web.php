@@ -13,12 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PostController@index')->middleware('auth');
+Route::get('/', 'PostController@home')->middleware('auth');
 
 Auth::routes();
 
 Route::get('/guest', 'Auth\LoginController@guest');
-
 
 Route::get('/privacy', 'RuleController@privacy');
 Route::get('/terms', 'RuleController@terms');
