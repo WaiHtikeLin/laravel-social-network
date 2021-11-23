@@ -22,10 +22,10 @@ class PostController extends Controller
     public function index(Request $request, $type="feeds")
     {
 
-      // if (!$request->secure())
-      // {
+      if (!$request->secure())
+      {
       return redirect('/home', 302, [], true);
-      // }
+      }
 
       $user=Auth::user();
 
