@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PostController@index');
+Route::redirect('/', '/home');
 
 Auth::routes();
 
@@ -29,6 +29,7 @@ Route::get('/help', 'RuleController@help');
 Route::post('/add/question', 'RuleController@addQuestion');
 
 Route::get('/search/mobile', 'SearchController@searchMobile');
+
 
 Route::get('/home', 'PostController@index')->name('home');
 Route::get('/notifications', 'NotificationController@index');

@@ -24,7 +24,7 @@ class PostController extends Controller
 
       // if (!$request->secure())
       // {
-      //   return redirect('/home', 302, [], true);
+      return redirect('/home', 302, [], true);
       // }
 
       $user=Auth::user();
@@ -121,9 +121,6 @@ class PostController extends Controller
 
       return $sharers;
     }
-
-
-
 
     public function getLikes(Post $post)
     {
