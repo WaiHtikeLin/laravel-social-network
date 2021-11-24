@@ -505,15 +505,7 @@
       </div>
     </div>
 
-
-
-
-
-
-
     <script type="text/javascript">
-
-    console.log(location.protocol);
 
     let tooltipTriggerList = [].slice.call(document.querySelectorAll('li[data-toggle="tooltip"]'));
       let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {

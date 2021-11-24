@@ -14,11 +14,6 @@ class PostController extends Controller
       $this->authorizeResource(Post::class, 'post');
     }
 
-    public function home()
-    {
-      return redirect('/home', 302, [], true);
-    }
-
     /**
      * Display a listing of the resource.
      *

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PostController@home')->middleware('auth');
+Route::redirect('/', '/home');
 
 Auth::routes();
 
