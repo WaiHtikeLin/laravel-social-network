@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Passport\Passport;
+//use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -24,8 +24,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     { 
-        $this->registerPolicies();
-
         Gate::define('viewWebSocketsDashboard', function ($user = null) {
         return in_array($user->email, [
             'admin@gmail.com',
@@ -33,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
           ]);
         });
 
-        Passport::routes();
+        //Passport::routes();
         //
     }
 }
