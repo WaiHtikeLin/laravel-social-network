@@ -31,4 +31,4 @@
     <a href="{{url('/user/profile/1')}}" class="@yield('link-to-contact')">Contact</a>
     &nbsp; <a href="{{url('/help')}}" class="@yield('link-to-help')">Help</a> </p>
 
-  <p class="text-center">Connect &#169;2020</p>
+  <p class="text-center">Connect &#169;<?php echo date("Y"); ?></p>

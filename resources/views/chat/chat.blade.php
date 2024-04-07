@@ -196,7 +196,7 @@ document.querySelector("#send_message_form input[type='submit']").disabled=false
 
     let id=link.dataset.msgId;
 
-    let value=document.querySelector("#msg_"+id).textContent;
+    let value=document.querySelector("#msg_"+id).textContent.trim();
     document.querySelector("#edit-msg-modal input[type='text']").value=value;
     document.querySelector("#edit-msg-modal form").dataset.msgId=id;
 

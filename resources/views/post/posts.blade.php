@@ -7,7 +7,7 @@ function formatDate(date) {
   // hours = hours % 12;
   // hours = hours ? hours : 12; // the hour '0' should be '12'
   // minutes = minutes < 10 ? '0'+minutes : minutes;
-  return `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
+  return `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
 }
 
 
@@ -647,7 +647,7 @@ function checkShare(f)
         box.prepend(wrap);
       }
 
-
+      $(f).find('.comment').val("");
       document.querySelectorAll(`.comment-count[data-feed-id='${id}']`).forEach(count=>{count.textContent=comment.count;});
     }
 
@@ -675,6 +675,8 @@ function checkShare(f)
       wrap.innerHTML=`@include('post.comment.reply')`;
 
       document.querySelectorAll(`.replies-collapse[data-comment-id='${id}']`).forEach(collapse=>{collapse.prepend(wrap)});
+
+      $(f).find(".reply").val("");
 
       document.querySelectorAll(`.comment-reply-count[data-comment-id='${id}']`).forEach(count=>{count.textContent=reply.count});
     }

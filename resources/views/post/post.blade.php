@@ -241,7 +241,7 @@ ${renderCopyModal(feed.id,feed.copyable)}
       @csrf
       @method('post')
       <div class="input-group">
-        <input class="form-control rounded-pill mr-2"
+        <input class="form-control rounded-pill mr-2 comment"
         type="text" name="comment" value="" placeholder="Enter comment..."
         aria-label="Text box to comment" aria-describedby="send-comment">
         <input class="btn btn-light rounded-pill" type="submit" name="" value="Send">
@@ -273,7 +273,7 @@ aria-labelledby="comments" aria-hidden="true" data-feed-id='${feed.id}'>
             @csrf
             @method('post')
             <div class="input-group">
-              <input class="form-control rounded-pill mr-2"
+              <input class="form-control rounded-pill mr-2 comment"
               type="text" name="comment" value="" placeholder="Enter comment..."
               aria-label="Text box to comment" aria-describedby="send-comment">
               <input class="btn btn-light rounded-pill" type="submit" name="" value="Send">

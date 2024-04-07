@@ -114,7 +114,7 @@ side-nav-active
   @endif
 
   @if($address && (($me->canViewInfo($address['privacy'],$info->user_id) || isset($mine))))
-  <p><img src="{{asset("img/location.png")}}" alt="" class="info-icon mr-2">{{$address['name']}}</p>
+  <p><img src="{{asset("img/pin.png")}}" alt="" class="info-icon mr-2">{{$address['name']}}</p>
   @endif
 
   @if($email && (($me->canViewInfo($email['privacy'],$info->user_id) || isset($mine))))

@@ -57,8 +57,10 @@ class PostController extends Controller
           $query->where([['type','profile'],['status',1]]);
         },'reactions'=> function($query) use ($id){
           $query->where('id',$id);
-        }])->attributes($user->id)->whereIn('privacy', ['friend','public'])->whereNotIn('posts.user_id',$ids)
-      ->whereNotIn('id',$post_ids)->latest()->offset($page*10)->limit(10)->get();
+        }])->attributes($user->id)->where('posts.user_id', $id)->orWhere(function ($query) use ($ids, $post_ids) {
+        $query->whereIn('privacy', ['friend','public'])->whereNotIn('posts.user_id',$ids)
+              ->whereNotIn('id',$post_ids); })
+      ->latest()->offset($page*10)->limit(10)->get();
     }
 
     public function getFeeds($page)

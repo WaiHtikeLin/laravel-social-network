@@ -48,7 +48,7 @@
           @csrf
           @method('post')
           <div class="input-group">
-            <input class="form-control rounded-pill mr-2"
+            <input class="form-control rounded-pill mr-2 reply"
             type="text" name="texts" value="" placeholder="Enter reply..."
             aria-label="Text box to reply" aria-describedby="send-reply">
             <input class="btn btn-light rounded-pill" type="submit" name="" value="Send">
