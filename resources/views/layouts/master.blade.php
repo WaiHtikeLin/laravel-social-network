@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://connectonline.space/">
+    <meta property="og:site_name" content="Connect">
+    <meta property="og:image" itemprop="image primaryImageOfPage" content="https://connectonline.space/favicon.ico">
+    <meta name="description" content="Connect is a social network application where you can post how you feel, what's on your mind with your friends, public or only you.">
     <title>Connect</title>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
