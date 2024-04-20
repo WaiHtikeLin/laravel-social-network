@@ -81,19 +81,17 @@ class MessageSent extends Notification implements ShouldQueue
             ->custom([
                 'android' => [
                     'notification' => [
-                        'color' => '#0A0A0A',
-                        'icon' => 'https://connectonline.space/favicon.ico',
-                        'sound' => 'default'
+                        'color' => '#0A0A0A'
                     ],
                     'fcm_options' => [
                         'analytics_label' => 'analytics',
-                        'link' => 'https://connectonline.space/chat/to/'.$this->sender->id,
+                        'link' => 'https://connectonline.space/chat/to/'.$this->sender->id
                     ],
                 ],
                 'apns' => [
                     'fcm_options' => [
                         'analytics_label' => 'analytics',
-                        'link' => 'https://connectonline.space/chat/to/'.$this->sender->id,
+                        'link' => 'https://connectonline.space/chat/to/'.$this->sender->id
                     ],
                 ],
             ]);
