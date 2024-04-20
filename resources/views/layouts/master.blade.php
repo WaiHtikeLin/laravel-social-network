@@ -15,7 +15,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script>
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./firebase-messaging-sw.js').then(function(registration) {
+    navigator.serviceWorker.register('/firebase-messaging-sw.js').then(function(registration) {
       console.log('Firebase Worker Registered');
 
     }).catch(function(err) {
