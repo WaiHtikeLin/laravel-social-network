@@ -29,5 +29,8 @@
     "bugs": {
         "url": "https://github.com/WaiHtikeLin/Connect/issues"
     },
-    "homepage": "https://github.com/WaiHtikeLin/Connect#readme"
+    "homepage": "https://github.com/WaiHtikeLin/Connect#readme",
+    "dependencies": {
+        "firebase": "^10.10.0"
+    }
 }

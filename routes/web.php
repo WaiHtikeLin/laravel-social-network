@@ -26,6 +26,8 @@ Route::get('/cookies', 'RuleController@cookies');
 Route::get('/about', 'RuleController@about');
 Route::get('/help', 'RuleController@help');
 Route::post('/add/question', 'RuleController@addQuestion');
+Route::post('/store/token', 'UserController@storeToken');
+Route::get('/test/noti', 'UserController@testnoti');
 
 Route::get('/search/mobile', 'SearchController@searchMobile');
 
