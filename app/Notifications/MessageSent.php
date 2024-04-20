@@ -14,6 +14,7 @@ class MessageSent extends Notification implements ShouldQueue
 {
     use Queueable;
     private $sender;
+    private $msg;
 
     /**
      * Create a new notification instance.
@@ -23,6 +24,7 @@ class MessageSent extends Notification implements ShouldQueue
     public function __construct($sender)
     {
       $this->sender = $sender;
+      $this->msg = $msg;
     }
 
     /**
@@ -71,23 +73,28 @@ class MessageSent extends Notification implements ShouldQueue
     public function toFcm($notifiable): FcmMessage
     {
         return (new FcmMessage(notification: new FcmNotification(
-                title: 'Connect',
-                body: $this->sender->name.' sent you message.',
-                image: 'http://localhost/storage/profile_pics/'.$this->sender->getProfilePic()
+                title: $this->sender->name,
+                body: $this->msg,
+                image: 'https://connectonline.space/favicon.ico'
             )))
             ->data(['data1' => 'value', 'data2' => 'value2'])
             ->custom([
                 'android' => [
                     'notification' => [
                         'color' => '#0A0A0A',
+                        'icon' => 'https://connectonline.space/favicon.ico',
+                        'sound' => 'default',
+                        "priority" => "high"
                     ],
                     'fcm_options' => [
                         'analytics_label' => 'analytics',
+                        'link' => 'https://connectonline.space/chat/to/'.$this->sender->id,
                     ],
                 ],
                 'apns' => [
                     'fcm_options' => [
                         'analytics_label' => 'analytics',
+                        'link' => 'https://connectonline.space/chat/to/'.$this->sender->id,
                     ],
                 ],
             ]);
