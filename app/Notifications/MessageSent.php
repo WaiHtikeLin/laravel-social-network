@@ -83,8 +83,7 @@ class MessageSent extends Notification implements ShouldQueue
                     'notification' => [
                         'color' => '#0A0A0A',
                         'icon' => 'https://connectonline.space/favicon.ico',
-                        'sound' => 'default',
-                        "priority" => "high"
+                        'sound' => 'default'
                     ],
                     'fcm_options' => [
                         'analytics_label' => 'analytics',
