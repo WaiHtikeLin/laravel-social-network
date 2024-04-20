@@ -18,6 +18,11 @@ class UserController extends Controller
       return view('menu.options');
     }
 
+    public function testnoti() {
+      $auth_user=Auth::user();
+      $auth_user->notify(new \App\Notifications\MessageSent($auth_user));
+    }
+
     public function changeName(Request $request)
     {
       $request->validate([
@@ -346,6 +351,12 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         //
+    }
+
+    public function storeToken(Request $request) {
+      $request->user()->update([
+        'fcm_token' => $request->token
+      ]);
     }
 
     /**
