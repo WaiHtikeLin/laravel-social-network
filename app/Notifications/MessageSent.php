@@ -21,7 +21,7 @@ class MessageSent extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($sender)
+    public function __construct($sender, $msg)
     {
       $this->sender = $sender;
       $this->msg = $msg;
