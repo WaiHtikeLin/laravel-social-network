@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function testnoti() {
       $auth_user=Auth::user();
-      $auth_user->notify(new \App\Notifications\MessageSent($auth_user));
+      $auth_user->notify(new \App\Notifications\MessageSent($auth_user, 'hello'));
     }
 
     public function changeName(Request $request)

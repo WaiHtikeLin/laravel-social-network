@@ -74,8 +74,7 @@ class MessageSent extends Notification implements ShouldQueue
     {
         return (new FcmMessage(notification: new FcmNotification(
                 title: $this->sender->name,
-                body: $this->msg,
-                image: 'https://connectonline.space/favicon.ico'
+                body: $this->msg
             )))
             ->data(['data1' => 'value', 'data2' => 'value2'])
             ->custom([
@@ -89,6 +88,18 @@ class MessageSent extends Notification implements ShouldQueue
                 ],
                 'apns' => [
                     'fcm_options' => [
+                        'analytics_label' => 'analytics',
+                    ],
+                ],
+                'webpush' => [
+                    'notification' => [
+                        'icon' => asset("storage/profile_pics/")."/".$this->sender->getProfilePic(),
+                        'badge' => 'https://connectonline.space/favicon.ico'
+
+                    ],
+
+                    'fcm_options' => [
+                        'link' => 'https://connectonline.space/chat/to/'.$this->sender->id,
                         'analytics_label' => 'analytics',
                     ],
                 ],
