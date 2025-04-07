@@ -1,6 +1,6 @@
 # Connect
 Connect is a social network application written in Laravel.
-Live at [https://connectonline.space](https://connectshare.xyz)
+Live at [https://connectshare.xyz](https://connectshare.xyz)
 
 ## Features
 - create posts
