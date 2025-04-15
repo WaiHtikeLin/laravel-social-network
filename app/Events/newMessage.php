@@ -9,6 +9,7 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class newMessage implements ShouldBroadcast
 {
@@ -34,6 +35,13 @@ class newMessage implements ShouldBroadcast
       $this->profile_pic=$profile_pic;
       $this->count=$count;
       $this->id=$id;
+      Log::debug('New message event triggered', [
+          'message' => $this->message,
+          'sender' => $this->sender,
+          'profile_pic' => $this->profile_pic,
+          'count' => $this->count,
+          'id' => $this->id
+      ]);
     }
 
     /**
