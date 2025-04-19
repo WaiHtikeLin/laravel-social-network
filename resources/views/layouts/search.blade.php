@@ -11,7 +11,7 @@
     <meta property="og:image" itemprop="image primaryImageOfPage" content="https://connectonline.space/favicon.ico">
     <meta name="description" content="Connect is a social network application where you can post how you feel, what's on your mind with your friends, public or only you.">
     <title>Connect</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
       .main-color{
         color: #034b00;
@@ -92,9 +92,6 @@
     </style>
   </head>
   <body>
-
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
           $.ajaxSetup({

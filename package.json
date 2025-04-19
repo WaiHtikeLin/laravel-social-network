@@ -1,36 +1,23 @@
 {
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
     "devDependencies": {
-        "cross-env": "^7.0",
-        "jquery": "^3.2",
-        "laravel-echo": "^1.16.0",
-        "laravel-mix": "^6.0.49",
-        "lodash": "^4.17.19",
-        "popper.js": "^1.12",
-        "pusher-js": "^8.4.0-rc2",
-        "resolve-url-loader": "^5.0.0",
-        "sass": "^1.15.2",
-        "sass-loader": "^8.0.0",
-        "vue-template-compiler": "^2.6.11"
+        "axios": "^1.8.2",
+        "concurrently": "^9.0.1",
+        "laravel-echo": "^2.0.2",
+        "laravel-vite-plugin": "^1.2.0",
+        "pusher-js": "^8.4.0",
+        "sass": "^1.86.3",
+        "vite": "^6.2.4"
     },
-    "name": "connect",
-    "description": "Connect is a social network application written in Laravel(v7.11.0).",
-    "version": "1.0.0",
-    "main": "webpack.mix.js",
-    "directories": {
-        "test": "tests"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/WaiHtikeLin/Connect.git"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/WaiHtikeLin/Connect/issues"
-    },
-    "homepage": "https://github.com/WaiHtikeLin/Connect#readme",
     "dependencies": {
-        "firebase": "^10.10.0"
+        "@popperjs/core": "^2.11.8",
+        "bootstrap": "^5.3.5",
+        "jquery": "^3.7.1",
+        "lodash": "^4.17.21"
     }
 }
