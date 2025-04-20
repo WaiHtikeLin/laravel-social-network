@@ -1,5 +1,5 @@
 # Connect
-Connect is a social network application written in Laravel.
+Connect is a social network application written in Laravel 12.x (latest version).
 Live at [https://connectshare.xyz](https://connectshare.xyz)
 
 ## Features
@@ -15,23 +15,17 @@ Live at [https://connectshare.xyz](https://connectshare.xyz)
 ## Installation in Local
 - git clone https://github.com/WaiHtikeLin/Connect.git projectname
 - cd projectname
-- minimum php version 8.1.0
+- minimum php version 8.2
 - composer install
 - copy .env.example to .env file
 - php artisan key:generate to regenerate secure key
-- create new database and edit .env file for DB settings
-- php artisan migrate
-- need to run Reverb's installation command to publish the configuration, add Reverb's required environment variables
-```
-php artisan reverb:install
-```
+- create new mysql database and edit .env file for DB settings
+- php artisan migrate --seed (--seed is required for creating the guest account to login as guest)
 - storage and bootstrap/cache directories should be writable
 - php artisan storage:link
-- php artisan serve
-- need to run queue worker
-```
-php artisan queue:work --queue=message,default
-```
+- npm install to load frontend dependencies
+- npm run build
+- composer run dev
 - finally start the laravel reverb server
 ```
 php artisan reverb:start
