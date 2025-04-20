@@ -20,7 +20,7 @@ Live at [https://connectshare.xyz](https://connectshare.xyz)
 - copy .env.example to .env file
 - php artisan key:generate to regenerate secure key
 - create new mysql database and edit .env file for DB settings
-- php artisan migrate
+- php artisan migrate --seed (--seed is required for creating the guest account to login as guest)
 - storage and bootstrap/cache directories should be writable
 - php artisan storage:link
 - npm install to load frontend dependencies
