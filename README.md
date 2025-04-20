@@ -23,8 +23,6 @@ Live at [https://connectshare.xyz](https://connectshare.xyz)
 - php artisan migrate --seed (--seed is required for creating the guest account to login as guest)
 - storage and bootstrap/cache directories should be writable
 - php artisan storage:link
-- npm install to load frontend dependencies
-- npm run build
 - composer run dev
 - finally start the laravel reverb server
 ```
