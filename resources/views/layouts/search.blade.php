@@ -6,12 +6,13 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://connectonline.space/">
+    <meta property="og:url" content="https://connectshare.xyz/">
     <meta property="og:site_name" content="Connect">
     <meta property="og:image" itemprop="image primaryImageOfPage" content="https://connectonline.space/favicon.ico">
     <meta name="description" content="Connect is a social network application where you can post how you feel, what's on your mind with your friends, public or only you.">
     <title>Connect</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <style>
       .main-color{
         color: #034b00;
@@ -1006,7 +1007,48 @@
         return elem;
       }
 
-      Echo.private('App.User.'+id).notification((noti) => {
+      document.querySelector("#notifications").addEventListener('show.bs.dropdown',()=>{
+        $('#noti_count').html('');
+        $('#noti_count_all').html('');
+        getNoti();
+
+      },{once:true});
+
+      document.querySelector("#requests").addEventListener('show.bs.dropdown',()=>{
+        $('#requests_count').html('');
+        $('#requests_count_all').html('');
+        getRequests();
+
+      },{once:true});
+
+      document.querySelector("#messages").addEventListener('show.bs.dropdown',()=>{
+        getMessages();
+
+      },{once: true});
+
+      $("#notifications").on('shown.bs.dropdown',function(){
+
+                                            if($('#noti_count').html()!='')
+                                            {
+                                              getUnreadNotifications(document.querySelector("#noti_remind"));
+                                              $('#noti_count').html('');
+                                              $('#noti_count_all').html('');
+                                            }
+                                          });
+
+$("#requests").on('shown.bs.dropdown',function(){
+  if($('#requests_count').html()!=''){
+    getUnreadRequests(document.querySelector("#requests_remind"));
+    $('#requests_count').html('');
+    $('#requests_count_all').html('');
+  }
+});
+
+
+    </script>
+
+  <script type="module">
+    Echo.private('App.User.'+id).notification((noti) => {
         if(!$("#noti_count").html())
           $("#noti_count").html('0');
 
@@ -1153,45 +1195,6 @@
         @endisset
       });
 
-      document.querySelector("#notifications").addEventListener('show.bs.dropdown',()=>{
-        $('#noti_count').html('');
-        $('#noti_count_all').html('');
-        getNoti();
-
-      },{once:true});
-
-      document.querySelector("#requests").addEventListener('show.bs.dropdown',()=>{
-        $('#requests_count').html('');
-        $('#requests_count_all').html('');
-        getRequests();
-
-      },{once:true});
-
-      document.querySelector("#messages").addEventListener('show.bs.dropdown',()=>{
-        getMessages();
-
-      },{once: true});
-
-      $("#notifications").on('shown.bs.dropdown',function(){
-
-                                            if($('#noti_count').html()!='')
-                                            {
-                                              getUnreadNotifications(document.querySelector("#noti_remind"));
-                                              $('#noti_count').html('');
-                                              $('#noti_count_all').html('');
-                                            }
-                                          });
-
-$("#requests").on('shown.bs.dropdown',function(){
-  if($('#requests_count').html()!=''){
-    getUnreadRequests(document.querySelector("#requests_remind"));
-    $('#requests_count').html('');
-    $('#requests_count_all').html('');
-  }
-});
-
-
-    </script>
-
+  </script>
   </body>
 </html>

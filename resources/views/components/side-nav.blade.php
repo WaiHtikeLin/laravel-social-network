@@ -28,7 +28,7 @@
     &nbsp; <a href="{{url('/cookies')}}" class="@yield('link-to-cookies')">Cookies</a>
     &nbsp;<a href="{{url('/about')}}" class="@yield('link-to-about')">About</a>
     <br>
-    <a href="{{url('/user/profile/1')}}" class="@yield('link-to-contact')">Contact</a>
+    <a href="https://www.linkedin.com/in/wai-htike-lin/" class="@yield('link-to-contact')">Contact</a>
     &nbsp; <a href="{{url('/help')}}" class="@yield('link-to-help')">Help</a> </p>
 
   <p class="text-center">Connect &#169;<?php echo date("Y"); ?></p>

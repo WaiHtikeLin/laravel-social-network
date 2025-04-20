@@ -256,12 +256,8 @@ class ChatController extends Controller
     $message['created_at']=$mymessage->created_at;
 
     event(new \App\Events\newMessage($message,$sender,$sender->getProfilePic(),$count,$id));
-    $recipient->notify(new \App\Notifications\MessageSent($sender, $msg));
 
     return $mymessage;
   }
-
-
-
 
 }

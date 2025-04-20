@@ -11,7 +11,7 @@
 <script type="text/javascript">
 
 const data={
-  'email' : 'guest@gmail.com',
+  'email' : 'wfeed.contact@gmail.com',
   'password' : 'guest12345'
 };
 

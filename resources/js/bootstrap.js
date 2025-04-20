@@ -1,11 +1,9 @@
 import _ from 'lodash';
-
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
-import $ from 'jquery';
 import axios from 'axios';
 // Import our custom CSS
 import '../sass/app.scss'
@@ -17,9 +15,8 @@ import Echo from 'laravel-echo';
  
 import Pusher from 'pusher-js';
 
-window.$ = $;
-window.jQuery = $;
 window._ = _;
+window.bootstrap = bootstrap;
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

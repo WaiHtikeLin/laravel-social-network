@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'fcm_token'
+        'name', 'email', 'password'
     ];
 
     /**
@@ -37,16 +37,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * Specifies the user's FCM token
-     *
-     * @return string|array
-    */
-    public function routeNotificationForFcm()
-    {
-        return $this->fcm_token;
-    }
 
     public function canJoinRoom($roomId)
     {

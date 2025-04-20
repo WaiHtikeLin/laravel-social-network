@@ -6,14 +6,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://connectonline.space/">
+    <meta property="og:url" content="https://connectshare.xyz/">
     <meta property="og:site_name" content="Connect">
     <meta property="og:image" itemprop="image primaryImageOfPage" content="https://connectonline.space/favicon.ico">
     <meta name="description" content="Connect is a social network application where you can post how you feel, what's on your mind with your friends, public or only you.">
     <title>Connect</title>
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <style>
       .main-color{
         color: #034b00;
@@ -1016,155 +1016,6 @@
         return elem;
       }
 
-      Echo.private('App.User.'+id).notification((noti) => {
-
-        let count=parseInt($("#noti_count").html());
-
-        if(!count)
-          count=0;
-        count+=1;
-
-
-        if($('#link-to-noti').hasClass('nav-item-active'))
-        {
-          if(count==1)
-            $("#noti_menu_all").prepend(getNotiRemainderForAll());
-          else
-            $("#noti_remind_all").html(count+" new notifications");
-        }
-        else
-        {
-          if(count==1)
-            $("#noti_menu").prepend(getNotiRemainder());
-          if($("#notifications_trigger").hasClass('show'))
-          {
-
-
-            $("#noti_remind").html(count+" new notifications");
-          }
-          else
-          {
-
-
-            $("#noti_count").html(count);
-            $("#noti_count_all").html(count);
-          }
-
-        }
-
-      }).listen('FriendRequested',(data)=>{
-
-        let count=parseInt($("#requests_count").html());
-
-        if(!count)
-          count=0;
-        count+=1;
-
-
-        if($('#link-to-requests').hasClass('nav-item-active'))
-        {
-          if(count==1)
-            $("#requests_menu_all").prepend(getRequestsRemainderForAll());
-          else
-            $("#requests_remind_all").html(count+" new requests");
-        }
-        else
-        {
-
-          if(count==1)
-            $("#requests_menu").prepend(getRequestsRemainder());
-
-          if($("#requests_trigger").hasClass('show'))
-          {
-
-
-            $("#requests_remind").html(count+" new requests");
-          }
-          else
-          { $("#requests_count").html(count);
-            $("#requests_count_all").html(count);
-          }
-
-        }
-      }).listen('newMessage',data=>{
-          if(data.count==0)
-            data.count='';
-
-        @isset($room_id)
-          if(data.message.room_id=='{{$room_id}}')
-          {
-            let new_message=document.createElement('div');
-            chatbox.append(createNewMessage(new_message,data.message,true));
-            fetch('{{url('')}}/seen/to/'+data.message.id,{
-              method: 'PATCH',
-              headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              }
-
-            });
-
-            previous_id=data.message.sender_id;
-          }
-          else
-          {
-            document.querySelector('#messages_count').innerHTML=data.count;
-            document.querySelector('#messages_count_all').innerHTML=data.count;
-
-          }
-
-        @else
-
-          $("#messages_count").html(data.count);
-          $("#messages_count_all").html(data.count);
-
-          let created_at=getTimeDiff(data.message.created_at);
-
-          if($('#link-to-messages').hasClass('nav-item-active'))
-          {
-            let chat=document.querySelector("#chat_all_"+data.message.room_id);
-            let chats=document.querySelector("#messages_menu_all");
-
-            if(chat)
-            {
-              let msg_count=chat.querySelector('#msg_count');
-              if(msg_count)
-                msg_count.textContent=parseInt(msg_count.textContent)+1;
-              chat.querySelector("#latest_msg").innerHTML=data.message.message;
-              chat.querySelector("#created_at").innerHTML=created_at;
-              chats.prepend(chat);
-
-            }
-            else{
-              let wrap=document.createElement('div');
-              wrap.id="chat_all_"+data.message.room_id;
-              chats.prepend(createMessage(data.message,data.sender,data.profile_pic,data.count,wrap));
-            }
-          }
-          else if($("#messages_trigger").hasClass('show'))
-          {
-            let chat=document.querySelector("#chat_"+data.message.room_id);
-            let chats=document.querySelector("#messages_menu");
-
-            if(chat)
-            {
-              let msg_count=chat.querySelector('#msg_count');
-              if(msg_count)
-                msg_count.textContent=parseInt(msg_count.textContent)+1;
-              chat.querySelector("#latest_msg").innerHTML=data.message.message;
-              chat.querySelector("#created_at").innerHTML=created_at;
-              chats.prepend(chat);
-
-            }
-            else{
-              let wrap=document.createElement('div');
-              wrap.id="chat_"+data.message.room_id;
-              chats.prepend(createMessage(data.message,data.sender,data.profile_pic,data.count,wrap));
-            }
-          }
-
-        @endisset
-      });
-
       document.querySelector("#notifications").addEventListener('show.bs.dropdown',()=>{
         $('#noti_count').html('');
         $('#noti_count_all').html('');
@@ -1212,6 +1063,157 @@ $("#requests").on('shown.bs.dropdown',function(){
 });
 
 
+    </script>
+
+    <script type="module">
+            Echo.private('App.User.'+id).notification((noti) => {
+
+let count=parseInt($("#noti_count").html());
+
+if(!count)
+  count=0;
+count+=1;
+
+
+if($('#link-to-noti').hasClass('nav-item-active'))
+{
+  if(count==1)
+    $("#noti_menu_all").prepend(getNotiRemainderForAll());
+  else
+    $("#noti_remind_all").html(count+" new notifications");
+}
+else
+{
+  if(count==1)
+    $("#noti_menu").prepend(getNotiRemainder());
+  if($("#notifications_trigger").hasClass('show'))
+  {
+
+
+    $("#noti_remind").html(count+" new notifications");
+  }
+  else
+  {
+
+
+    $("#noti_count").html(count);
+    $("#noti_count_all").html(count);
+  }
+
+}
+
+}).listen('FriendRequested',(data)=>{
+
+let count=parseInt($("#requests_count").html());
+
+if(!count)
+  count=0;
+count+=1;
+
+
+if($('#link-to-requests').hasClass('nav-item-active'))
+{
+  if(count==1)
+    $("#requests_menu_all").prepend(getRequestsRemainderForAll());
+  else
+    $("#requests_remind_all").html(count+" new requests");
+}
+else
+{
+
+  if(count==1)
+    $("#requests_menu").prepend(getRequestsRemainder());
+
+  if($("#requests_trigger").hasClass('show'))
+  {
+
+
+    $("#requests_remind").html(count+" new requests");
+  }
+  else
+  { $("#requests_count").html(count);
+    $("#requests_count_all").html(count);
+  }
+
+}
+}).listen('newMessage',data=>{
+  if(data.count==0)
+    data.count='';
+
+@isset($room_id)
+  if(data.message.room_id=='{{$room_id}}')
+  {
+    let new_message=document.createElement('div');
+    chatbox.append(createNewMessage(new_message,data.message,true));
+    fetch('{{url('')}}/seen/to/'+data.message.id,{
+      method: 'PATCH',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+
+    });
+
+    previous_id=data.message.sender_id;
+  }
+  else
+  {
+    document.querySelector('#messages_count').innerHTML=data.count;
+    document.querySelector('#messages_count_all').innerHTML=data.count;
+
+  }
+
+@else
+
+  $("#messages_count").html(data.count);
+  $("#messages_count_all").html(data.count);
+
+  let created_at=getTimeDiff(data.message.created_at);
+
+  if($('#link-to-messages').hasClass('nav-item-active'))
+  {
+    let chat=document.querySelector("#chat_all_"+data.message.room_id);
+    let chats=document.querySelector("#messages_menu_all");
+
+    if(chat)
+    {
+      let msg_count=chat.querySelector('#msg_count');
+      if(msg_count)
+        msg_count.textContent=parseInt(msg_count.textContent)+1;
+      chat.querySelector("#latest_msg").innerHTML=data.message.message;
+      chat.querySelector("#created_at").innerHTML=created_at;
+      chats.prepend(chat);
+
+    }
+    else{
+      let wrap=document.createElement('div');
+      wrap.id="chat_all_"+data.message.room_id;
+      chats.prepend(createMessage(data.message,data.sender,data.profile_pic,data.count,wrap));
+    }
+  }
+  else if($("#messages_trigger").hasClass('show'))
+  {
+    let chat=document.querySelector("#chat_"+data.message.room_id);
+    let chats=document.querySelector("#messages_menu");
+
+    if(chat)
+    {
+      let msg_count=chat.querySelector('#msg_count');
+      if(msg_count)
+        msg_count.textContent=parseInt(msg_count.textContent)+1;
+      chat.querySelector("#latest_msg").innerHTML=data.message.message;
+      chat.querySelector("#created_at").innerHTML=created_at;
+      chats.prepend(chat);
+
+    }
+    else{
+      let wrap=document.createElement('div');
+      wrap.id="chat_"+data.message.room_id;
+      chats.prepend(createMessage(data.message,data.sender,data.profile_pic,data.count,wrap));
+    }
+  }
+
+@endisset
+});
     </script>
 
   </body>
