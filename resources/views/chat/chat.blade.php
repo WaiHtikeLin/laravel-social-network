@@ -77,7 +77,7 @@
 
 
 
-<script type="text/javascript">
+<script type="module">
   let previous_id=null;
   function createNewMessage(wrap,msg)
   {
