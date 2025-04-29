@@ -222,18 +222,18 @@ class User extends Authenticatable
 
     public function friendRequests()
     {
-      return $this->belongsToMany(self::class,'friendRequests','source_id','request_id')->withPivot('status')->withTimestamps();
+      return $this->belongsToMany(self::class,'friendrequests','source_id','request_id')->withPivot('status')->withTimestamps();
     }
 
     public function uncheckedFriendRequests()
     {
-      return $this->belongsToMany(self::class,'friendRequests','source_id','request_id')->withTimestamps()
+      return $this->belongsToMany(self::class,'friendrequests','source_id','request_id')->withTimestamps()
       ->wherePivot('status',0);
     }
 
     public function sentRequests()
     {
-      return $this->belongsToMany(self::class,'friendRequests','request_id','source_id')->withPivot('status')->withTimestamps();
+      return $this->belongsToMany(self::class,'friendrequests','request_id','source_id')->withPivot('status')->withTimestamps();
     }
 
     public function followers()

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ChatMessage extends Model
 {
-  protected $table='ChatMessages';
+  protected $table='chatmessages';
 
   protected $guarded = [];
 
