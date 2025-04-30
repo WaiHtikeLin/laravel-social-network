@@ -26,7 +26,7 @@ class ChatController extends Controller
 
     $latest=ChatMessage::selectRaw('room_id as rid, max(created_at) as latest')->where('user_id',$id)->groupBy('room_id');
     $messages=ChatMessage::select('message','room_id','created_at')->where('user_id',$id)->joinSub($latest,'latest', function($join){
-      $join->on('ChatMessages.room_id','=','latest.rid')->whereColumn('ChatMessages.created_at','latest.latest');
+      $join->on('chatmessages.room_id','=','latest.rid')->whereColumn('chatmessages.created_at','latest.latest');
     });
 
     $rooms=Room::select('id','message','messages.created_at')
@@ -64,7 +64,7 @@ class ChatController extends Controller
 
     $latest=ChatMessage::selectRaw('room_id as rid, max(created_at) as latest')->where('user_id',$id)->groupBy('room_id');
     $messages=ChatMessage::select('message','room_id','created_at')->where('user_id',$id)->joinSub($latest,'latest', function($join){
-      $join->on('ChatMessages.room_id','=','latest.rid')->whereColumn('ChatMessages.created_at','latest.latest');
+      $join->on('chatmessages.room_id','=','latest.rid')->whereColumn('chatmessages.created_at','latest.latest');
     });
 
     $rooms=Room::select('id','message', 'messages.created_at')->whereHas('messages',function($query) use ($id){
