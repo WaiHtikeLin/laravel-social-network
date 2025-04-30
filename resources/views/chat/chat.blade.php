@@ -77,7 +77,7 @@
 
 
 
-<script type="module">
+<script type="text/javascript">
   let previous_id=null;
   function createNewMessage(wrap,msg)
   {
@@ -109,8 +109,7 @@ function getChatMessages(index)
       return response.json();
   }).then(msgs=>{
 
-
-    for(i=msgs.length-1;i>=0;i--)
+    for(let i=msgs.length-1;i>=0;i--)
     {
       let wrap=document.createElement('div');
       chatbox.append(createNewMessage(wrap,msgs[i]));
@@ -141,15 +140,6 @@ getChatMessages(0);
 
 document.querySelector("#send_message_form input[type='text']").disabled=false;
 document.querySelector("#send_message_form input[type='submit']").disabled=false;
-
-  Echo.private('App.User.{{Auth::id()}}').listen('editedMessage',(data)=>{
-    if(data.room_id=='{{$room_id}}')
-      document.querySelector("#msg_"+data.id).innerHTML=data.message;
-
-  }).listen('sawMessage', data=>{
-    if(data.room_id=='{{$room_id}}')
-      document.querySelectorAll(".send_status").forEach(status=>{status.textContent='Seen';});
-  });
 
   send_message_form.onsubmit= async (e) => {
     e.preventDefault();
@@ -248,5 +238,16 @@ async function deleteMsg(link)
 
 }
 
+</script>
+
+<script type="module">
+  Echo.private('App.User.{{Auth::id()}}').listen('editedMessage',(data)=>{
+    if(data.room_id=='{{$room_id}}')
+      document.querySelector("#msg_"+data.id).innerHTML=data.message;
+
+  }).listen('sawMessage', data=>{
+    if(data.room_id=='{{$room_id}}')
+      document.querySelectorAll(".send_status").forEach(status=>{status.textContent='Seen';});
+  });
 </script>
 @endsection
